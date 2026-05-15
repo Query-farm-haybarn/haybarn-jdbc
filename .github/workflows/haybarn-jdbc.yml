@@ -28,11 +28,11 @@ concurrency:
 env:
   # Pinned in line with HAYBARN/ROLL-FORWARD.md — dated tag, not :latest, so
   # toolchain drift is explicit.
-  MANYLINUX_AMD64: quay.io/pypa/manylinux_2_28_x86_64:2024.10.07-1
-  MANYLINUX_AARCH64: quay.io/pypa/manylinux_2_28_aarch64:2024.10.07-1
+  MANYLINUX_AMD64: quay.io/pypa/manylinux_2_28_x86_64:2026.05.13-1
+  MANYLINUX_AARCH64: quay.io/pypa/manylinux_2_28_aarch64:2026.05.13-1
   # musl images change less frequently; pin by digest-bearing tag.
-  MUSLLINUX_AMD64: quay.io/pypa/musllinux_1_2_x86_64:2024.10.07-1
-  MUSLLINUX_AARCH64: quay.io/pypa/musllinux_1_2_aarch64:2024.10.07-1
+  MUSLLINUX_AMD64: quay.io/pypa/musllinux_1_2_x86_64:2026.05.13-1
+  MUSLLINUX_AARCH64: quay.io/pypa/musllinux_1_2_aarch64:2026.05.13-1
 
 jobs:
   linux-amd64:
