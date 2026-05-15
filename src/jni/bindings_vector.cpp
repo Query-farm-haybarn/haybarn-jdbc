@@ -22,7 +22,7 @@ static duckdb_vector vector_buf_to_vector(JNIEnv *env, jobject vector_buf) {
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_get_string
  * Signature: (Ljava/nio/ByteBuffer;J)[B
  */
@@ -56,7 +56,7 @@ Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1string__Ljava_nio_By
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_create_vector
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
@@ -76,7 +76,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_destroy_vector
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -91,7 +91,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1v
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_get_column_type
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
@@ -109,7 +109,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_get_data
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
@@ -135,7 +135,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_get_validity
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
@@ -164,7 +164,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_ensure_validity_writable
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -180,7 +180,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1en
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_assign_string_element_len
  * Signature: (Ljava/nio/ByteBuffer;J[B)V
  */
@@ -208,7 +208,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1as
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_list_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
@@ -226,7 +226,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1v
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_list_vector_get_size
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -244,7 +244,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vec
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_list_vector_set_size
  * Signature: (Ljava/nio/ByteBuffer;J)I
  */
@@ -266,7 +266,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vect
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_list_vector_reserve
  * Signature: (Ljava/nio/ByteBuffer;J)I
  */
@@ -288,7 +288,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vect
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_struct_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
@@ -311,7 +311,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1struct_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_array_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
