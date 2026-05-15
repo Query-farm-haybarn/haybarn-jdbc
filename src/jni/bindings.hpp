@@ -4,7 +4,7 @@ extern "C" {
 #include "duckdb.h"
 }
 
-#include "org_duckdb_DuckDBBindings.h"
+#include "farm_query_haybarn_DuckDBBindings.h"
 
 duckdb_logical_type logical_type_buf_to_logical_type(JNIEnv *env, jobject logical_type_buf);
 

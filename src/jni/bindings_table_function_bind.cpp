@@ -17,7 +17,7 @@ static duckdb_bind_info bind_info_buf_to_bind_info(JNIEnv *env, jobject bind_inf
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_add_result_column
  * Signature: (Ljava/nio/ByteBuffer;[BLjava/nio/ByteBuffer;)V
  */
@@ -47,7 +47,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1add_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_parameter_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -65,7 +65,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1get
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_parameter
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
@@ -87,7 +87,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1g
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_named_parameter
  * Signature: (Ljava/nio/ByteBuffer;[B)Ljava/nio/ByteBuffer;
  */
@@ -110,7 +110,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1g
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_bind_data
  * Signature: (Ljava/nio/ByteBuffer;Ljava/lang/Object;)V
  */
@@ -136,7 +136,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1set_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_cardinality
  * Signature: (Ljava/nio/ByteBuffer;JZ)V
  */
@@ -158,7 +158,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1set_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_error
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */

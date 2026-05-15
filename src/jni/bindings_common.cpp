@@ -1,7 +1,7 @@
 #include "bindings.hpp"
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_size
  * Signature: ()J
  */

@@ -20,7 +20,7 @@ static duckdb_value value_buf_to_value(JNIEnv *env, jobject value_buf) {
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_is_null_value
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
@@ -35,7 +35,7 @@ JNIEXPORT jboolean JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1is_1nu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_value_type
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
@@ -52,7 +52,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1value
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_destroy_value
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -67,7 +67,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1v
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_bool
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
@@ -82,7 +82,7 @@ JNIEXPORT jboolean JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1b
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_int8
  * Signature: (Ljava/nio/ByteBuffer;)B
  */
@@ -97,7 +97,7 @@ JNIEXPORT jbyte JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int8
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_uint8
  * Signature: (Ljava/nio/ByteBuffer;)S
  */
@@ -112,7 +112,7 @@ JNIEXPORT jshort JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uin
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_int16
  * Signature: (Ljava/nio/ByteBuffer;)S
  */
@@ -127,7 +127,7 @@ JNIEXPORT jshort JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_uint16
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
@@ -142,7 +142,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint1
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_int32
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
@@ -157,7 +157,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int32
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_uint32
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -172,7 +172,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_int64
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -187,7 +187,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int6
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_uint64
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -202,7 +202,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_hugeint
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
@@ -219,7 +219,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1hu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_uhugeint
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
@@ -235,7 +235,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uh
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_bignum
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
@@ -246,7 +246,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1bi
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_decimal
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigDecimal;
  */
@@ -264,7 +264,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1de
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_float
  * Signature: (Ljava/nio/ByteBuffer;)F
  */
@@ -279,7 +279,7 @@ JNIEXPORT jfloat JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1flo
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_double
  * Signature: (Ljava/nio/ByteBuffer;)D
  */
@@ -294,7 +294,7 @@ JNIEXPORT jdouble JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1do
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_date
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
@@ -308,7 +308,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1date(
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_time
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -319,7 +319,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_time_ns
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -330,7 +330,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_time_tz
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -341,7 +341,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_timestamp
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -357,7 +357,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_timestamp_tz
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -368,7 +368,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_timestamp_s
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -384,7 +384,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_timestamp_ms
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -400,7 +400,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_timestamp_ns
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
@@ -416,7 +416,7 @@ JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_get_varchar
  * Signature: (Ljava/nio/ByteBuffer;)[B
  */

@@ -36,7 +36,7 @@ static duckdb_function_info function_info_buf_to_function_info(JNIEnv *env, jobj
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_create_scalar_function
  * Signature: ()Ljava/nio/ByteBuffer;
  */
@@ -45,7 +45,7 @@ JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_destroy_scalar_function
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -59,7 +59,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1s
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_name
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
@@ -82,7 +82,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_add_parameter
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)V
  */
@@ -101,7 +101,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_return_type
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)V
  */
@@ -119,7 +119,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_varargs
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)V
  */
@@ -138,7 +138,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_volatile
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -152,7 +152,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_special_handling
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -166,7 +166,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_register_scalar_function
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
@@ -185,7 +185,7 @@ JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1register_1
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_extra_info
  * Signature: (Ljava/nio/ByteBuffer;Ljava/lang/Object;)V
  */
@@ -212,7 +212,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_function
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
@@ -259,7 +259,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1scalar_1fu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_scalar_function_set_error
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
