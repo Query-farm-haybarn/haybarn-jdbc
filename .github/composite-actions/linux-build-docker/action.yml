@@ -28,13 +28,15 @@ runs:
             set -e
             cat /etc/os-release
             dnf install -y java-1.8.0-openjdk-devel ninja-build
-            # EPEL 8 ccache is 3.7.7 — too old for the HTTP remote-storage
-            # backend. Pull 4.13.6 from the upstream GitHub release.
+            # EPEL 8 ccache is 3.7.7 — too old for HTTP remote-storage.
+            # ccache's glibc tarball needs GLIBC_2.34+; the manylinux_2_28
+            # base has 2.28. The musl-static variant is fully statically
+            # linked and runs on any Linux regardless of host libc.
             CCACHE_VERSION=4.13.6
             ARCH=$(uname -m)
-            curl -fsSL "https://github.com/ccache/ccache/releases/download/v${CCACHE_VERSION}/ccache-${CCACHE_VERSION}-linux-${ARCH}-glibc.tar.xz" -o /tmp/ccache.tar.xz
+            curl -fsSL "https://github.com/ccache/ccache/releases/download/v${CCACHE_VERSION}/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static.tar.xz" -o /tmp/ccache.tar.xz
             tar -xJf /tmp/ccache.tar.xz -C /tmp
-            install -m 0755 "/tmp/ccache-${CCACHE_VERSION}-linux-${ARCH}-glibc/ccache" /usr/local/bin/ccache
+            install -m 0755 "/tmp/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static/ccache" /usr/local/bin/ccache
             ccache --version
             make -C /duckdb release
             ccache -s
