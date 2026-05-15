@@ -162,7 +162,7 @@ for build in combine_builds:
 
 javadoc_stage_dir = tempfile.mkdtemp()
 
-exec("javadoc -Xdoclint:-reference -d %s -sourcepath %s/src/main/java org.duckdb" % (javadoc_stage_dir, jdbc_root_path))
+exec("javadoc -Xdoclint:-reference -d %s -sourcepath %s/src/main/java farm.query.haybarn" % (javadoc_stage_dir, jdbc_root_path))
 exec("jar -cvf %s -C %s ." % (javadoc_jar, javadoc_stage_dir))
 exec("jar -cvf %s -C %s/src/main/java org" % (sources_jar, jdbc_root_path))
 

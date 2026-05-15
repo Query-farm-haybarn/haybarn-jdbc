@@ -27,7 +27,7 @@ duckdb_logical_type logical_type_buf_to_logical_type(JNIEnv *env, jobject logica
  * Method:    duckdb_create_logical_type
  * Signature: (I)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1logical_1type(JNIEnv *env, jclass, jint type) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1logical_1type(JNIEnv *env, jclass, jint type) {
 
 	duckdb_type dt = static_cast<duckdb_type>(type);
 
@@ -41,7 +41,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1logical
  * Method:    duckdb_create_decimal_type
  * Signature: (II)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1decimal_1type(JNIEnv *env, jclass, jint width,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1decimal_1type(JNIEnv *env, jclass, jint width,
                                                                                        jint scale) {
 
 	if (width < 1 || width > 38) {
@@ -61,7 +61,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1decimal
  * Method:    duckdb_get_type_id
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1type_1id(JNIEnv *env, jclass, jobject logical_type) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1type_1id(JNIEnv *env, jclass, jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
 	if (env->ExceptionCheck()) {
@@ -78,7 +78,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1type_1id(JNIE
  * Method:    duckdb_decimal_width
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1width(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1decimal_1width(JNIEnv *env, jclass,
                                                                              jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -96,7 +96,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1width(JNI
  * Method:    duckdb_decimal_scale
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1scale(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1decimal_1scale(JNIEnv *env, jclass,
                                                                              jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -114,7 +114,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1scale(JNI
  * Method:    duckdb_decimal_internal_type
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1internal_1type(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1decimal_1internal_1type(JNIEnv *env, jclass,
                                                                                       jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -132,7 +132,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1decimal_1internal_
  * Method:    duckdb_create_list_type
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1list_1type(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1list_1type(JNIEnv *env, jclass,
                                                                                     jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -150,7 +150,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1list_1t
  * Method:    duckdb_create_array_type
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1array_1type(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1array_1type(JNIEnv *env, jclass,
                                                                                      jobject logical_type,
                                                                                      jlong array_size) {
 
@@ -173,7 +173,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1array_1
  * Method:    duckdb_create_struct_type
  * Signature: ([Ljava/nio/ByteBuffer;[[B)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1struct_1type(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1struct_1type(JNIEnv *env, jclass,
                                                                                       jobjectArray member_types,
                                                                                       jobjectArray member_names) {
 
@@ -246,7 +246,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1struct_
  * Method:    duckdb_struct_type_child_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1type_1child_1count(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1struct_1type_1child_1count(JNIEnv *env, jclass,
                                                                                           jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -264,7 +264,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1type_1chi
  * Method:    duckdb_struct_type_child_name
  * Signature: (Ljava/nio/ByteBuffer;J)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1type_1child_1name(JNIEnv *env, jclass,
+JNIEXPORT jbyteArray JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1struct_1type_1child_1name(JNIEnv *env, jclass,
                                                                                               jobject logical_type,
                                                                                               jlong index) {
 
@@ -298,7 +298,7 @@ JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1type
  * Method:    duckdb_array_type_array_size
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1array_1type_1array_1size(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1array_1type_1array_1size(JNIEnv *env, jclass,
                                                                                         jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -316,7 +316,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1array_1type_1arra
  * Method:    duckdb_enum_internal_type
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1internal_1type(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1enum_1internal_1type(JNIEnv *env, jclass,
                                                                                    jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -334,7 +334,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1internal_1ty
  * Method:    duckdb_enum_dictionary_size
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1dictionary_1size(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1enum_1dictionary_1size(JNIEnv *env, jclass,
                                                                                       jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -352,7 +352,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1dictionary_
  * Method:    duckdb_enum_dictionary_value
  * Signature: (Ljava/nio/ByteBuffer;J)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1dictionary_1value(JNIEnv *env, jclass,
+JNIEXPORT jbyteArray JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1enum_1dictionary_1value(JNIEnv *env, jclass,
                                                                                             jobject logical_type,
                                                                                             jlong index) {
 
@@ -386,7 +386,7 @@ JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1enum_1dictio
  * Method:    duckdb_destroy_logical_type
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1logical_1type(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1logical_1type(JNIEnv *env, jclass,
                                                                                      jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);

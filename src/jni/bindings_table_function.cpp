@@ -37,7 +37,7 @@ static duckdb_function_info function_info_buf_to_function_info(JNIEnv *env, jobj
  * Method:    duckdb_create_table_function
  * Signature: ()Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1table_1function(JNIEnv *env, jclass) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1table_1function(JNIEnv *env, jclass) {
 
 	duckdb_table_function tf = duckdb_create_table_function();
 
@@ -49,7 +49,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1table_1
  * Method:    duckdb_destroy_table_function
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1table_1function(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1table_1function(JNIEnv *env, jclass,
                                                                                        jobject table_function) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -65,7 +65,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1table_1fu
  * Method:    duckdb_table_function_set_name
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1name(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1name(JNIEnv *env, jclass,
                                                                                          jobject table_function,
                                                                                          jbyteArray name) {
 
@@ -90,7 +90,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Method:    duckdb_table_function_add_parameter
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1add_1parameter(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1add_1parameter(JNIEnv *env, jclass,
                                                                                               jobject table_function,
                                                                                               jobject logical_type) {
 
@@ -111,7 +111,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1a
  * Method:    duckdb_table_function_add_named_parameter
  * Signature: (Ljava/nio/ByteBuffer;[BLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1add_1named_1parameter(
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1add_1named_1parameter(
     JNIEnv *env, jclass, jobject table_function, jbyteArray name, jobject logical_type) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -139,7 +139,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1a
  * Method:    duckdb_table_function_set_extra_info
  * Signature: (Ljava/nio/ByteBuffer;Lorg/duckdb/DuckDBTableFunctionWrapper;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1extra_1info(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1extra_1info(JNIEnv *env, jclass,
                                                                                                 jobject table_function,
                                                                                                 jobject callback) {
 
@@ -167,7 +167,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Method:    duckdb_table_function_set_bind
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1bind(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1bind(JNIEnv *env, jclass,
                                                                                          jobject table_function) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -205,7 +205,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Method:    duckdb_table_function_set_init
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1init(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1init(JNIEnv *env, jclass,
                                                                                          jobject table_function) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -245,7 +245,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
 JNIEXPORT void JNICALL
-Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1local_1init(JNIEnv *env, jclass, jobject table_function) {
+Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1local_1init(JNIEnv *env, jclass, jobject table_function) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
 	if (env->ExceptionCheck()) {
@@ -283,7 +283,7 @@ Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1local_1init(JNIEnv 
  * Method:    duckdb_table_function_set_function
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1set_1function(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1function(JNIEnv *env, jclass,
                                                                                              jobject table_function) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -328,7 +328,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Method:    duckdb_table_function_supports_projection_pushdown
  * Signature: (Ljava/nio/ByteBuffer;Z)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1supports_1projection_1pushdown(
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1supports_1projection_1pushdown(
     JNIEnv *env, jclass, jobject table_function, jboolean pushdown) {
 
 	duckdb_table_function tf = table_function_buf_to_table_function(env, table_function);
@@ -345,7 +345,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1table_1function_1s
  * Method:    duckdb_register_table_function
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1register_1table_1function(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1register_1table_1function(JNIEnv *env, jclass,
                                                                                         jobject connection,
                                                                                         jobject table_function) {
 
@@ -368,7 +368,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1register_1table_1f
  * Method:    duckdb_function_get_bind_data
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/lang/Object;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1bind_1data(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1function_1get_1bind_1data(JNIEnv *env, jclass,
                                                                                            jobject function_info) {
 
 	duckdb_function_info fi = function_info_buf_to_function_info(env, function_info);
@@ -390,7 +390,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1
  * Method:    duckdb_function_get_init_data
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/lang/Object;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1init_1data(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1function_1get_1init_1data(JNIEnv *env, jclass,
                                                                                            jobject function_info) {
 
 	duckdb_function_info fi = function_info_buf_to_function_info(env, function_info);
@@ -413,7 +413,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/lang/Object;
  */
 JNIEXPORT jobject JNICALL
-Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1local_1init_1data(JNIEnv *env, jclass, jobject function_info) {
+Java_farm_query_haybarn_DuckDBBindings_duckdb_1function_1get_1local_1init_1data(JNIEnv *env, jclass, jobject function_info) {
 
 	duckdb_function_info fi = function_info_buf_to_function_info(env, function_info);
 	if (env->ExceptionCheck()) {
@@ -434,7 +434,7 @@ Java_org_duckdb_DuckDBBindings_duckdb_1function_1get_1local_1init_1data(JNIEnv *
  * Method:    duckdb_function_set_error
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1function_1set_1error(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1function_1set_1error(JNIEnv *env, jclass,
                                                                                    jobject function_info,
                                                                                    jbyteArray error) {
 

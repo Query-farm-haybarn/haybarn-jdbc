@@ -238,7 +238,7 @@ def create_javadoc_jar(jdbc_root, staging_dir, version):
     """Create javadoc JAR."""
     javadoc_dir = tempfile.mkdtemp()
     try:
-        run_cmd(f'javadoc -Xdoclint:-reference -d {javadoc_dir} -sourcepath {jdbc_root}/src/main/java org.duckdb')
+        run_cmd(f'javadoc -Xdoclint:-reference -d {javadoc_dir} -sourcepath {jdbc_root}/src/main/java farm.query.haybarn')
         javadoc_jar = os.path.join(staging_dir, f'duckdb_jdbc-{version}-javadoc.jar')
         run_cmd(f'jar -cvf {javadoc_jar} -C {javadoc_dir} .')
         return javadoc_jar

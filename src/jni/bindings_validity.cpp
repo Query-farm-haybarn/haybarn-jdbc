@@ -26,7 +26,7 @@ static uint64_t *validity_buf_to_validity(JNIEnv *env, jobject validity_buf) {
  * Method:    duckdb_validity_row_is_valid
  * Signature: (Ljava/nio/ByteBuffer;J)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1validity_1row_1is_1valid(JNIEnv *env, jclass,
+JNIEXPORT jboolean JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1validity_1row_1is_1valid(JNIEnv *env, jclass,
                                                                                            jobject validity,
                                                                                            jlong row) {
 
@@ -50,7 +50,7 @@ JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1validity_1row_
  * Method:    duckdb_validity_set_row_validity
  * Signature: (Ljava/nio/ByteBuffer;JZ)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1validity_1set_1row_1validity(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1validity_1set_1row_1validity(JNIEnv *env, jclass,
                                                                                            jobject validity, jlong row,
                                                                                            jboolean valid) {
 

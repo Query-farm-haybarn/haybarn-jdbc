@@ -18,7 +18,7 @@ def function_hook(fn: CppMethod, config):
             'params': ', '.join(f'{param["type"]} {name}' for param, name in zip(params, names)),
             'return_type': return_type,
             'short_name': (
-                '_duckdb_jdbc_' + name.replace('Java_org_duckdb_DuckDBNative_duckdb_1jdbc_1', '').replace('1', '')
+                '_duckdb_jdbc_' + name.replace('Java_farm_query_haybarn_DuckDBNative_duckdb_1jdbc_1', '').replace('1', '')
             ),
         }
     )

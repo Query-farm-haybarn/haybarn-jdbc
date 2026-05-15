@@ -21,7 +21,7 @@ static duckdb_init_info init_info_buf_to_init_info(JNIEnv *env, jobject init_inf
  * Method:    duckdb_init_get_bind_data
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/lang/Object;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1bind_1data(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1get_1bind_1data(JNIEnv *env, jclass,
                                                                                        jobject init_info) {
 
 	duckdb_init_info ii = init_info_buf_to_init_info(env, init_info);
@@ -43,7 +43,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1bind
  * Method:    duckdb_init_set_init_data
  * Signature: (Ljava/nio/ByteBuffer;Ljava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1set_1init_1data(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1set_1init_1data(JNIEnv *env, jclass,
                                                                                     jobject init_info,
                                                                                     jobject init_data) {
 	if (init_data == nullptr) {
@@ -68,7 +68,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1set_1init_1d
  * Method:    duckdb_init_get_column_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1column_1count(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1get_1column_1count(JNIEnv *env, jclass,
                                                                                         jobject init_info) {
 
 	duckdb_init_info ii = init_info_buf_to_init_info(env, init_info);
@@ -85,7 +85,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1column
  * Method:    duckdb_init_get_column_index
  * Signature: (Ljava/nio/ByteBuffer;J)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1column_1index(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1get_1column_1index(JNIEnv *env, jclass,
                                                                                         jobject init_info,
                                                                                         jlong column_index) {
 
@@ -108,7 +108,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1get_1column
  * Method:    duckdb_init_set_max_threads
  * Signature: (Ljava/nio/ByteBuffer;J)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1set_1max_1threads(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1set_1max_1threads(JNIEnv *env, jclass,
                                                                                       jobject init_info,
                                                                                       jlong max_threads) {
 
@@ -129,7 +129,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1set_1max_1th
  * Method:    duckdb_init_set_error
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1init_1set_1error(JNIEnv *env, jclass, jobject init_info,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1init_1set_1error(JNIEnv *env, jclass, jobject init_info,
                                                                                jbyteArray error) {
 	duckdb_init_info ii = init_info_buf_to_init_info(env, init_info);
 	if (env->ExceptionCheck()) {
