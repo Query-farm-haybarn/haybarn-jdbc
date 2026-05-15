@@ -22,8 +22,8 @@ public class TestNoLib {
         String dir = currentJarDir.toAbsolutePath().toString();
         ProcessBuilder pb = new ProcessBuilder(javaExe().toAbsolutePath().toString(),
                                                "-Djava.library.path=" + currentJarDir.toAbsolutePath(), "-cp",
-                                               dir + File.separator + "duckdb_jdbc_tests.jar" + File.pathSeparator +
-                                                   dir + File.separator + "duckdb_jdbc_nolib.jar",
+                                               dir + File.separator + "haybarn_jdbc_tests.jar" + File.pathSeparator +
+                                                   dir + File.separator + "haybarn_jdbc_nolib.jar",
                                                "farm.query.haybarn.TestDuckDBJDBC", "test_extension_excel")
                                 .inheritIO();
         int code = pb.start().waitFor();
@@ -65,8 +65,8 @@ public class TestNoLib {
         try (TempDirectory td = new TempDirectory()) {
             Path dir = DuckDBNative.currentJarDir();
             Path nativeLib = nativeLibPathInBuildTree(dir);
-            Files.copy(dir.resolve("duckdb_jdbc_nolib.jar"), td.path().resolve("duckdb_jdbc_nolib.jar"));
-            Files.copy(dir.resolve("duckdb_jdbc_tests.jar"), td.path().resolve("duckdb_jdbc_tests.jar"));
+            Files.copy(dir.resolve("haybarn_jdbc_nolib.jar"), td.path().resolve("haybarn_jdbc_nolib.jar"));
+            Files.copy(dir.resolve("haybarn_jdbc_tests.jar"), td.path().resolve("haybarn_jdbc_tests.jar"));
             Files.copy(nativeLib, td.path().resolve(nativeLib.getFileName()));
             System.out.println();
             System.out.println("----");
@@ -79,8 +79,8 @@ public class TestNoLib {
         try (TempDirectory td = new TempDirectory()) {
             Path dir = DuckDBNative.currentJarDir();
             Path nativeLib = nativeLibPathInBuildTree(dir);
-            Files.copy(dir.resolve("duckdb_jdbc_nolib.jar"), td.path().resolve("duckdb_jdbc_nolib.jar"));
-            Files.copy(dir.resolve("duckdb_jdbc_tests.jar"), td.path().resolve("duckdb_jdbc_tests.jar"));
+            Files.copy(dir.resolve("haybarn_jdbc_nolib.jar"), td.path().resolve("haybarn_jdbc_nolib.jar"));
+            Files.copy(dir.resolve("haybarn_jdbc_tests.jar"), td.path().resolve("haybarn_jdbc_tests.jar"));
             Files.copy(nativeLib, td.path().resolve(platformLibName()));
             System.out.println();
             System.out.println("----");

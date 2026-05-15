@@ -49,7 +49,7 @@ final class DuckDBNative {
 
         // There is no native library inside the JAR file, so we try to load it by name
         try {
-            System.loadLibrary("duckdb_java");
+            System.loadLibrary("haybarn_java");
         } catch (UnsatisfiedLinkError e) {
             // Native library cannot be loaded by name using ordinary JVM mechanisms, we try to load it directly
             // from FS - from the same directory where the current JAR resides
@@ -97,7 +97,7 @@ final class DuckDBNative {
         } else {
             arch = cpuArch();
         }
-        return "libduckdb_java.so_" + os + "_" + arch;
+        return "libhaybarn_java.so_" + os + "_" + arch;
     }
 
     static Path currentJarDir() throws Exception {
@@ -111,7 +111,7 @@ final class DuckDBNative {
     }
 
     private static void unpackAndLoad(URL nativeLibRes) throws IOException {
-        Path tmpFile = Files.createTempFile("libduckdb_java", ".so");
+        Path tmpFile = Files.createTempFile("libhaybarn_java", ".so");
         try (InputStream is = nativeLibRes.openStream()) {
             Files.copy(is, tmpFile, REPLACE_EXISTING);
         }
