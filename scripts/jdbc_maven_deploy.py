@@ -80,23 +80,23 @@ arch_specific_classifiers = [
 
 staging_dir = tempfile.mkdtemp()
 
-binary_jar = '%s/duckdb_jdbc-%s.jar' % (staging_dir, release_version)
-pom = '%s/duckdb_jdbc-%s.pom' % (staging_dir, release_version)
-sources_jar = '%s/duckdb_jdbc-%s-sources.jar' % (staging_dir, release_version)
-javadoc_jar = '%s/duckdb_jdbc-%s-javadoc.jar' % (staging_dir, release_version)
-nolib_jar = '%s/duckdb_jdbc-%s-nolib.jar' % (staging_dir, release_version)
+binary_jar = '%s/haybarn_jdbc-%s.jar' % (staging_dir, release_version)
+pom = '%s/haybarn_jdbc-%s.pom' % (staging_dir, release_version)
+sources_jar = '%s/haybarn_jdbc-%s-sources.jar' % (staging_dir, release_version)
+javadoc_jar = '%s/haybarn_jdbc-%s-javadoc.jar' % (staging_dir, release_version)
+nolib_jar = '%s/haybarn_jdbc-%s-nolib.jar' % (staging_dir, release_version)
 
 arch_specific_jars = []
 for i in range(len(arch_specific_builds)):
   build = arch_specific_builds[i]
   classifier = arch_specific_classifiers[i]
-  arch_specific_jars.append('%s/duckdb_jdbc-%s-%s.jar' % (staging_dir, release_version, classifier))
+  arch_specific_jars.append('%s/haybarn_jdbc-%s-%s.jar' % (staging_dir, release_version, classifier))
 
 pom_template = """
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.duckdb</groupId>
-  <artifactId>duckdb_jdbc</artifactId>
+  <groupId>farm.query.haybarn</groupId>
+  <artifactId>haybarn_jdbc</artifactId>
   <version>${VERSION}</version>
   <packaging>jar</packaging>
   <name>DuckDB JDBC Driver</name>
@@ -141,7 +141,7 @@ pom_path = pathlib.Path(pom)
 pom_path.write_text(pom_template.replace("${VERSION}", release_version))
 
 # prepare 'empty' jar
-linux_amd64_src_jar = os.path.join(jdbc_artifact_dir, "java-" + combine_builds[0], "duckdb_jdbc.jar")
+linux_amd64_src_jar = os.path.join(jdbc_artifact_dir, "java-" + combine_builds[0], "haybarn_jdbc.jar")
 with zipfile.ZipFile(linux_amd64_src_jar) as linux_amd64:
   with zipfile.ZipFile(binary_jar, mode='w') as nolib:
     for item in linux_amd64.infolist():
@@ -154,7 +154,7 @@ shutil.copyfile(binary_jar, nolib_jar)
 
 # fatten up 'empty' jar adding native libs
 for build in combine_builds:
-    old_jar = zipfile.ZipFile(os.path.join(jdbc_artifact_dir, "java-" + build, "duckdb_jdbc.jar"), 'r')
+    old_jar = zipfile.ZipFile(os.path.join(jdbc_artifact_dir, "java-" + build, "haybarn_jdbc.jar"), 'r')
     for zip_entry in old_jar.namelist():
         if zip_entry.startswith('libduckdb_java.so'):
             old_jar.extract(zip_entry, staging_dir)
@@ -169,7 +169,7 @@ exec("jar -cvf %s -C %s/src/main/java org" % (sources_jar, jdbc_root_path))
 # copy arch-specific JARs
 for i in range(len(arch_specific_builds)):
   build = arch_specific_builds[i]
-  src_jar = os.path.join(jdbc_artifact_dir, "java-" + build, "duckdb_jdbc.jar")
+  src_jar = os.path.join(jdbc_artifact_dir, "java-" + build, "haybarn_jdbc.jar")
   dest_jar = arch_specific_jars[i] 
   shutil.copyfile(src_jar, dest_jar)
 
@@ -195,7 +195,7 @@ for file in files_to_deploy:
 bundle_root_dir = path.join(staging_dir, "central-bundle")
 bundle_zip = path.join(staging_dir, "central-bundle.zip")
 
-bundle_dir = path.join(bundle_root_dir, "org", "duckdb", "duckdb_jdbc", release_version)
+bundle_dir = path.join(bundle_root_dir, "farm", "query", "haybarn", "haybarn_jdbc", release_version)
 os.makedirs(bundle_dir)
 
 for file in files_to_deploy:

@@ -32,8 +32,8 @@ import tempfile
 import zipfile
 
 SNAPSHOT_REPO_URL = "https://central.sonatype.com/repository/maven-snapshots/"
-GROUP_ID = "org.duckdb"
-ARTIFACT_ID = "duckdb_jdbc"
+GROUP_ID = "farm.query.haybarn"
+ARTIFACT_ID = "haybarn_jdbc"
 
 # Mapping of build directories to Maven classifiers.
 # These architecture-specific JARs contain native libraries for a single platform only,
@@ -135,8 +135,8 @@ def deploy_file(settings_path, version, file_path, classifier=None, packaging='j
 
 def create_combined_jar(artifact_dir, staging_dir, version):
     """Create a fat JAR combining native libraries from multiple platforms."""
-    combined_jar = os.path.join(staging_dir, f'duckdb_jdbc-{version}.jar')
-    base_jar = os.path.join(artifact_dir, 'java-linux-amd64', 'duckdb_jdbc.jar')
+    combined_jar = os.path.join(staging_dir, f'haybarn_jdbc-{version}.jar')
+    base_jar = os.path.join(artifact_dir, 'java-linux-amd64', 'haybarn_jdbc.jar')
 
     with zipfile.ZipFile(combined_jar, 'w') as dst:
         # Copy base jar excluding native libs
@@ -147,7 +147,7 @@ def create_combined_jar(artifact_dir, staging_dir, version):
 
         # Add native libraries from all platforms
         for build in COMBINE_BUILDS:
-            build_jar = os.path.join(artifact_dir, build, 'duckdb_jdbc.jar')
+            build_jar = os.path.join(artifact_dir, build, 'haybarn_jdbc.jar')
             with zipfile.ZipFile(build_jar) as src:
                 for item in src.infolist():
                     if item.filename.startswith('libduckdb_java.so'):
@@ -167,8 +167,8 @@ def create_nolib_jar(artifact_dir, staging_dir, version):
     - Smaller artifact size when natives are managed separately
     - Container/deployment scenarios where natives are provided at infrastructure level
     """
-    nolib_jar = os.path.join(staging_dir, f'duckdb_jdbc-{version}-nolib.jar')
-    base_jar = os.path.join(artifact_dir, 'java-linux-amd64', 'duckdb_jdbc.jar')
+    nolib_jar = os.path.join(staging_dir, f'haybarn_jdbc-{version}-nolib.jar')
+    base_jar = os.path.join(artifact_dir, 'java-linux-amd64', 'haybarn_jdbc.jar')
 
     with zipfile.ZipFile(base_jar) as src:
         with zipfile.ZipFile(nolib_jar, 'w') as dst:
@@ -222,14 +222,14 @@ def create_pom(staging_dir, version):
   </scm>
 </project>
 """
-    pom_path = os.path.join(staging_dir, f'duckdb_jdbc-{version}.pom')
+    pom_path = os.path.join(staging_dir, f'haybarn_jdbc-{version}.pom')
     pathlib.Path(pom_path).write_text(pom_content)
     return pom_path
 
 
 def create_sources_jar(jdbc_root, staging_dir, version):
     """Create sources JAR."""
-    sources_jar = os.path.join(staging_dir, f'duckdb_jdbc-{version}-sources.jar')
+    sources_jar = os.path.join(staging_dir, f'haybarn_jdbc-{version}-sources.jar')
     run_cmd(f'jar -cvf {sources_jar} -C {jdbc_root}/src/main/java org')
     return sources_jar
 
@@ -239,7 +239,7 @@ def create_javadoc_jar(jdbc_root, staging_dir, version):
     javadoc_dir = tempfile.mkdtemp()
     try:
         run_cmd(f'javadoc -Xdoclint:-reference -d {javadoc_dir} -sourcepath {jdbc_root}/src/main/java farm.query.haybarn')
-        javadoc_jar = os.path.join(staging_dir, f'duckdb_jdbc-{version}-javadoc.jar')
+        javadoc_jar = os.path.join(staging_dir, f'haybarn_jdbc-{version}-javadoc.jar')
         run_cmd(f'jar -cvf {javadoc_jar} -C {javadoc_dir} .')
         return javadoc_jar
     finally:
@@ -297,7 +297,7 @@ def main():
         # Deploy architecture-specific JARs
         print("\n=== Deploying architecture-specific JARs ===")
         for build_name, classifier in ARCH_BUILDS.items():
-            jar_path = os.path.join(artifact_dir, build_name, 'duckdb_jdbc.jar')
+            jar_path = os.path.join(artifact_dir, build_name, 'haybarn_jdbc.jar')
             if os.path.exists(jar_path):
                 print(f"Deploying {classifier}...")
                 deploy_file(settings_path, version, jar_path, classifier=classifier)

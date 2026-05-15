@@ -29,8 +29,8 @@ ifeq ($(GEN),ninja)
 	FORCE_COLOR=-DFORCE_COLORED_OUTPUT=1
 endif
 
-JAR=$(JARS)/duckdb_jdbc.jar
-TEST_JAR=$(JARS)/duckdb_jdbc_tests.jar
+JAR=$(JARS)/haybarn_jdbc.jar
+TEST_JAR=$(JARS)/haybarn_jdbc_tests.jar
 CP=$(JAR)$(SEP)$(TEST_JAR)
 
 test: 
