@@ -10,5 +10,5 @@ runs:
         cat /etc/os-release
         ${JAVA_HOME_21_X64}/bin/java -version
         ${JAVA_HOME_21_X64}/bin/java                                                \
-          -cp ./build/release/duckdb_jdbc_tests.jar:./build/release/duckdb_jdbc.jar \
-          org.duckdb.TestDuckDBJDBC
+          -cp ./build/release/haybarn_jdbc_tests.jar:./build/release/haybarn_jdbc.jar \
+          farm.query.haybarn.TestDuckDBJDBC
