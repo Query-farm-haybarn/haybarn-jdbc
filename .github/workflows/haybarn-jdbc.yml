@@ -39,7 +39,7 @@ jobs:
     name: Linux (amd64)
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - name: Cache Key
@@ -47,7 +47,7 @@ jobs:
         run: |
           DUCKDB_VERSION=$(python3 ./scripts/print_duckdb_version.py)
           echo "value=${{ runner.os }}-${{ runner.arch }}-$DUCKDB_VERSION" >> "$GITHUB_OUTPUT"
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ github.workspace }}/ccache
           key: ccache-jdbc-${{ steps.cache_key.outputs.value }}
@@ -65,7 +65,7 @@ jobs:
           docker_image: '${{ env.MANYLINUX_AMD64 }}'
       - name: JDBC Tests (host)
         uses: ./.github/composite-actions/linux-tests-host
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-linux-amd64
           path: build/release/haybarn_jdbc.jar
@@ -75,10 +75,10 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/cache@v4
+      - uses: actions/cache@v5
         with:
           path: ${{ github.workspace }}/ccache
           key: ccache-jdbc-Linux-ARM64-${{ hashFiles('src/duckdb/**/*.cpp', 'src/duckdb/**/*.hpp') }}
@@ -87,7 +87,7 @@ jobs:
       - uses: ./.github/composite-actions/linux-build-docker
         with:
           docker_image: '${{ env.MANYLINUX_AARCH64 }}'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-linux-aarch64
           path: build/release/haybarn_jdbc.jar
@@ -97,13 +97,13 @@ jobs:
     runs-on: ubuntu-24.04
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: ./.github/composite-actions/linux-build-musl-docker
         with:
           docker_image: '${{ env.MUSLLINUX_AMD64 }}'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-linux-amd64-musl
           path: build/release/haybarn_jdbc.jar
@@ -113,13 +113,13 @@ jobs:
     runs-on: ubuntu-24.04-arm
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - uses: ./.github/composite-actions/linux-build-musl-docker
         with:
           docker_image: '${{ env.MUSLLINUX_AARCH64 }}'
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-linux-aarch64-musl
           path: build/release/haybarn_jdbc.jar
@@ -129,10 +129,10 @@ jobs:
     runs-on: macos-15
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -146,7 +146,7 @@ jobs:
         run: |
           java -cp build/release/haybarn_jdbc_tests.jar:build/release/haybarn_jdbc.jar \
             farm.query.haybarn.TestDuckDBJDBC
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-osx-universal
           path: build/release/haybarn_jdbc.jar
@@ -156,10 +156,10 @@ jobs:
     runs-on: windows-2022
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -176,7 +176,7 @@ jobs:
         run: |
           java -cp build\release\haybarn_jdbc_tests.jar;build\release\haybarn_jdbc.jar ^
             farm.query.haybarn.TestDuckDBJDBC
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-windows-amd64
           path: build/release/haybarn_jdbc.jar
@@ -186,10 +186,10 @@ jobs:
     runs-on: windows-11-arm
     if: github.event_name != 'pull_request'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -203,7 +203,7 @@ jobs:
           cd build\release
           cmake -G "Visual Studio 17 2022" -A ARM64 ..\..
           cmake --build . --config Release --target haybarn_jdbc
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: java-windows-aarch64
           path: build/release/haybarn_jdbc.jar
@@ -223,26 +223,26 @@ jobs:
       - windows-amd64
       - windows-aarch64
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           fetch-depth: 0
       - run: mkdir jdbc-artifacts
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-linux-amd64, path: jdbc-artifacts/java-linux-amd64 }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-linux-aarch64, path: jdbc-artifacts/java-linux-aarch64 }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-linux-amd64-musl, path: jdbc-artifacts/java-linux-amd64-musl }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-linux-aarch64-musl, path: jdbc-artifacts/java-linux-aarch64-musl }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-osx-universal, path: jdbc-artifacts/java-osx-universal }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-windows-amd64, path: jdbc-artifacts/java-windows-amd64 }
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with: { name: java-windows-aarch64, path: jdbc-artifacts/java-windows-aarch64 }
 
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '21'
@@ -267,7 +267,7 @@ jobs:
           python3 ./scripts/jdbc_maven_deploy.py "$VERSION" jdbc-artifacts .
 
       - if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: java-jars
           path: jdbc-artifacts
