@@ -26,7 +26,7 @@ static duckdb_vector vector_buf_to_vector(JNIEnv *env, jobject vector_buf) {
  * Method:    duckdb_vector_get_string
  * Signature: (Ljava/nio/ByteBuffer;J)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1string(JNIEnv *env, jclass,
+JNIEXPORT jbyteArray JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1string(JNIEnv *env, jclass,
                                                                                         jobject vector_data,
                                                                                         jlong row) {
 
@@ -50,9 +50,9 @@ JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL
-Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1string__Ljava_nio_ByteBuffer_2J(JNIEnv *env, jclass clazz,
+Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1string__Ljava_nio_ByteBuffer_2J(JNIEnv *env, jclass clazz,
                                                                                     jobject vector_data, jlong row) {
-	return Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1string(env, clazz, vector_data, row);
+	return Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1string(env, clazz, vector_data, row);
 }
 
 /*
@@ -60,7 +60,7 @@ Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1string__Ljava_nio_ByteBuffer
  * Method:    duckdb_create_vector
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1vector(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1vector(JNIEnv *env, jclass,
                                                                                 jobject logical_type) {
 
 	duckdb_logical_type lt = logical_type_buf_to_logical_type(env, logical_type);
@@ -80,7 +80,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1vector(
  * Method:    duckdb_destroy_vector
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1vector(JNIEnv *env, jclass, jobject vector) {
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1vector(JNIEnv *env, jclass, jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
 	if (env->ExceptionCheck()) {
@@ -95,7 +95,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1vector(JN
  * Method:    duckdb_vector_get_column_type
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1column_1type(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1column_1type(JNIEnv *env, jclass,
                                                                                            jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -113,7 +113,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1co
  * Method:    duckdb_vector_get_data
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1data(JNIEnv *env, jclass, jobject vector,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1data(JNIEnv *env, jclass, jobject vector,
                                                                                    jlong size_bytes) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -139,7 +139,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1da
  * Method:    duckdb_vector_get_validity
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1validity(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1get_1validity(JNIEnv *env, jclass,
                                                                                        jobject vector,
                                                                                        jlong vector_size_elems) {
 
@@ -168,7 +168,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1get_1va
  * Method:    duckdb_vector_ensure_validity_writable
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1ensure_1validity_1writable(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1ensure_1validity_1writable(JNIEnv *env, jclass,
                                                                                                  jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -184,7 +184,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1ensure_1va
  * Method:    duckdb_vector_assign_string_element_len
  * Signature: (Ljava/nio/ByteBuffer;J[B)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1assign_1string_1element_1len(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1assign_1string_1element_1len(JNIEnv *env, jclass,
                                                                                                    jobject vector,
                                                                                                    jlong index,
                                                                                                    jbyteArray str) {
@@ -212,7 +212,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1assign_1st
  * Method:    duckdb_list_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1get_1child(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vector_1get_1child(JNIEnv *env, jclass,
                                                                                           jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -230,7 +230,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1g
  * Method:    duckdb_list_vector_get_size
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1get_1size(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vector_1get_1size(JNIEnv *env, jclass,
                                                                                        jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -248,7 +248,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1get
  * Method:    duckdb_list_vector_set_size
  * Signature: (Ljava/nio/ByteBuffer;J)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1set_1size(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vector_1set_1size(JNIEnv *env, jclass,
                                                                                       jobject vector, jlong size) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -270,7 +270,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1set_
  * Method:    duckdb_list_vector_reserve
  * Signature: (Ljava/nio/ByteBuffer;J)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1reserve(JNIEnv *env, jclass, jobject vector,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1list_1vector_1reserve(JNIEnv *env, jclass, jobject vector,
                                                                                     jlong capacity) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);
@@ -292,7 +292,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1list_1vector_1rese
  * Method:    duckdb_struct_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1vector_1get_1child(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1struct_1vector_1get_1child(JNIEnv *env, jclass,
                                                                                             jobject vector,
                                                                                             jlong index) {
 
@@ -315,7 +315,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1struct_1vector_
  * Method:    duckdb_array_vector_get_child
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1array_1vector_1get_1child(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1array_1vector_1get_1child(JNIEnv *env, jclass,
                                                                                            jobject vector) {
 
 	duckdb_vector vec = vector_buf_to_vector(env, vector);

@@ -34,7 +34,7 @@ TEST_JAR=$(JARS)/duckdb_jdbc_tests.jar
 CP=$(JAR)$(SEP)$(TEST_JAR)
 
 test: 
-	java -cp $(CP) org.duckdb.TestDuckDBJDBC
+	java -cp $(CP) farm.query.haybarn.TestDuckDBJDBC
 
 debug:
 	mkdir -p build/debug

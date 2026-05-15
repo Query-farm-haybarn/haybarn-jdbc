@@ -24,7 +24,7 @@ static duckdb_value value_buf_to_value(JNIEnv *env, jobject value_buf) {
  * Method:    duckdb_is_null_value
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1is_1null_1value(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jboolean JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1is_1null_1value(JNIEnv *env, jclass, jobject value) {
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
 		return false;
@@ -39,7 +39,7 @@ JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1is_1null_1valu
  * Method:    duckdb_get_value_type
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1value_1type(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1value_1type(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -56,7 +56,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1value_1type(J
  * Method:    duckdb_destroy_value
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1value(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1value(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -71,7 +71,7 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1value(JNI
  * Method:    duckdb_get_bool
  * Signature: (Ljava/nio/ByteBuffer;)Z
  */
-JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1bool(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jboolean JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1bool(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -86,7 +86,7 @@ JNIEXPORT jboolean JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1bool(JNIE
  * Method:    duckdb_get_int8
  * Signature: (Ljava/nio/ByteBuffer;)B
  */
-JNIEXPORT jbyte JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int8(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jbyte JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int8(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -101,7 +101,7 @@ JNIEXPORT jbyte JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int8(JNIEnv 
  * Method:    duckdb_get_uint8
  * Signature: (Ljava/nio/ByteBuffer;)S
  */
-JNIEXPORT jshort JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint8(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jshort JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint8(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -116,7 +116,7 @@ JNIEXPORT jshort JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint8(JNIEn
  * Method:    duckdb_get_int16
  * Signature: (Ljava/nio/ByteBuffer;)S
  */
-JNIEXPORT jshort JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int16(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jshort JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int16(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -131,7 +131,7 @@ JNIEXPORT jshort JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int16(JNIEn
  * Method:    duckdb_get_uint16
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint16(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint16(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -146,7 +146,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint16(JNIEnv
  * Method:    duckdb_get_int32
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int32(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int32(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -161,7 +161,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int32(JNIEnv 
  * Method:    duckdb_get_uint32
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint32(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint32(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -176,7 +176,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint32(JNIEn
  * Method:    duckdb_get_int64
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int64(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1int64(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -191,7 +191,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1int64(JNIEnv
  * Method:    duckdb_get_uint64
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint64(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uint64(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -206,7 +206,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uint64(JNIEn
  * Method:    duckdb_get_hugeint
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1hugeint(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1hugeint(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -223,7 +223,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1hugeint(JN
  * Method:    duckdb_get_uhugeint
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uhugeint(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1uhugeint(JNIEnv *env, jclass, jobject value) {
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
 		return nullptr;
@@ -239,7 +239,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1uhugeint(J
  * Method:    duckdb_get_bignum
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigInteger;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1bignum(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1bignum(JNIEnv *env, jclass, jobject value) {
 	(void)env;
 	(void)value;
 	return nullptr;
@@ -250,7 +250,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1bignum(JNI
  * Method:    duckdb_get_decimal
  * Signature: (Ljava/nio/ByteBuffer;)Ljava/math/BigDecimal;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1decimal(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1decimal(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -268,7 +268,7 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1decimal(JN
  * Method:    duckdb_get_float
  * Signature: (Ljava/nio/ByteBuffer;)F
  */
-JNIEXPORT jfloat JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1float(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jfloat JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1float(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -283,7 +283,7 @@ JNIEXPORT jfloat JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1float(JNIEn
  * Method:    duckdb_get_double
  * Signature: (Ljava/nio/ByteBuffer;)D
  */
-JNIEXPORT jdouble JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1double(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jdouble JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1double(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -298,7 +298,7 @@ JNIEXPORT jdouble JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1double(JNI
  * Method:    duckdb_get_date
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1date(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1date(JNIEnv *env, jclass, jobject value) {
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
 		return static_cast<jint>(0);
@@ -312,7 +312,7 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1date(JNIEnv *
  * Method:    duckdb_get_time
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time(JNIEnv *env, jclass, jobject value) {
 	(void)env;
 	(void)value;
 	return 0;
@@ -323,7 +323,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time(JNIEnv 
  * Method:    duckdb_get_time_ns
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time_1ns(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time_1ns(JNIEnv *env, jclass, jobject value) {
 	(void)env;
 	(void)value;
 	return 0;
@@ -334,7 +334,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time_1ns(JNI
  * Method:    duckdb_get_time_tz
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time_1tz(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1time_1tz(JNIEnv *env, jclass, jobject value) {
 	(void)env;
 	(void)value;
 	return 0;
@@ -345,7 +345,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1time_1tz(JNI
  * Method:    duckdb_get_timestamp
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1timestamp(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -361,7 +361,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp(JN
  * Method:    duckdb_get_timestamp_tz
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1tz(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1timestamp_1tz(JNIEnv *env, jclass, jobject value) {
 	(void)env;
 	(void)value;
 	return 0;
@@ -372,7 +372,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1t
  * Method:    duckdb_get_timestamp_s
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1s(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1timestamp_1s(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -388,7 +388,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1s
  * Method:    duckdb_get_timestamp_ms
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1ms(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1timestamp_1ms(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -404,7 +404,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1m
  * Method:    duckdb_get_timestamp_ns
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1ns(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1timestamp_1ns(JNIEnv *env, jclass, jobject value) {
 
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
@@ -420,7 +420,7 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1timestamp_1n
  * Method:    duckdb_get_varchar
  * Signature: (Ljava/nio/ByteBuffer;)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1get_1varchar(JNIEnv *env, jclass, jobject value) {
+JNIEXPORT jbyteArray JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1get_1varchar(JNIEnv *env, jclass, jobject value) {
 	duckdb_value val = value_buf_to_value(env, value);
 	if (env->ExceptionCheck()) {
 		return nullptr;
