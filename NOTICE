@@ -1,0 +1,41 @@
+Haybarn — JDBC driver
+Copyright (c) 2025 Query Farm LLC
+
+This product is a derived distribution of DuckDB, powered by DuckDB.
+Haybarn is independent of and not endorsed by the DuckDB Foundation.
+DuckDB is a trademark of the DuckDB Foundation
+(https://duckdb.org/trademark_guidelines).
+
+This repository is a hard fork of duckdb/duckdb-java at tag v1.5.2.1. The
+upstream MIT LICENSE is preserved verbatim. Modifications introduced by
+Haybarn:
+
+  - Java package renamed: org.duckdb -> farm.query.haybarn (and likewise
+    org.duckdb.io / org.duckdb.user / test packages). All 80 Java source
+    files moved under src/{main,test}/java/farm/query/haybarn/.
+  - Driver SPI entry-point class renamed: DuckDBDriver -> HaybarnDriver.
+    META-INF/services/java.sql.Driver updated to farm.query.haybarn.HaybarnDriver.
+    Other DuckDB* class names are kept (DuckDBConnection, DuckDBAppender,
+    DuckDBResultSet, etc.) so user code that casts to them needs only an
+    import-source change.
+  - JDBC URL prefix: jdbc:duckdb: -> jdbc:haybarn: .
+  - Maven coordinates: org.duckdb:duckdb_jdbc -> farm.query.haybarn:haybarn_jdbc.
+  - JNI native library: libduckdb_java.so / duckdb_java.{def,exp,map} ->
+    libhaybarn_java.so / haybarn_java.{def,exp,map}. JNI function-name prefix
+    Java_org_duckdb_ -> Java_farm_query_haybarn_ . The internal Java native
+    method names (DuckDBNative.duckdb_jdbc_*) are kept since they're never
+    user-visible.
+  - Build artifacts: duckdb_jdbc.jar (+ _nolib / _tests / per-classifier)
+    -> haybarn_jdbc.jar.
+  - OSGi MANIFEST.MF rebranded to Haybarn (Query Farm LLC, hello@query.farm).
+  - The vendored src/duckdb/ DuckDB source tree was re-vendored via vendor.py
+    from Query-farm-haybarn/haybarn (haybarn branch), so the embedded engine
+    carries the Haybarn extension trust root (single Haybarn public key, no
+    DuckDB core/community keys) and the Haybarn extension repository URLs
+    (https://haybarn-extensions.query.farm/{core,community}).
+
+Source for the underlying DuckDB engine, as modified by Haybarn, is at:
+https://github.com/Query-farm-haybarn/haybarn
+
+The original duckdb-java project lives at:
+https://github.com/duckdb/duckdb-java
