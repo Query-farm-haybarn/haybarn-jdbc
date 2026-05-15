@@ -29,7 +29,7 @@ runs:
             cat /etc/os-release
             dnf install -y java-1.8.0-openjdk-devel ninja-build
             # EPEL 8 ccache is 3.7.7 — too old for HTTP remote-storage.
-            # ccache's glibc tarball needs GLIBC_2.34+; the manylinux_2_28
+            # ccaches glibc tarball needs GLIBC_2.34+; the manylinux_2_28
             # base has 2.28. The musl-static variant is fully statically
             # linked and runs on any Linux regardless of host libc.
             CCACHE_VERSION=4.13.6
