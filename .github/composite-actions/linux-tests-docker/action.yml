@@ -23,7 +23,7 @@ runs:
             /usr/lib/jvm/jre-1.8.0-openjdk/bin/java -version
             cd /duckdb
             /usr/lib/jvm/jre-1.8.0-openjdk/bin/java                                     \
-              -cp ./build/release/duckdb_jdbc_tests.jar:./build/release/duckdb_jdbc.jar \
-              org.duckdb.TestDuckDBJDBC
+              -cp ./build/release/haybarn_jdbc_tests.jar:./build/release/haybarn_jdbc.jar \
+              farm.query.haybarn.TestDuckDBJDBC
             rm ./test1.db
           "

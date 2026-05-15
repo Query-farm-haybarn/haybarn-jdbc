@@ -1,0 +1,273 @@
+# Haybarn JDBC: builds the JDBC driver across all supported platforms,
+# combines the per-platform JARs into the fat + classified Maven artifacts,
+# GPG-signs them with the Haybarn release key, and uploads to Sonatype Central.
+#
+# Trigger:
+#   - Push of a `haybarn-v*` tag → builds + Maven Central publish.
+#   - workflow_dispatch → builds only (no publish).
+#   - pull_request → builds linux-amd64 only (smoke test).
+name: Haybarn JDBC
+
+on:
+  push:
+    tags:
+      - 'haybarn-v[0-9]+.[0-9]+.[0-9]+*'
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Push to Maven Central (requires haybarn-v* tag)'
+        type: boolean
+        required: true
+        default: false
+
+concurrency:
+  group: haybarn-jdbc-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # Pinned in line with HAYBARN/ROLL-FORWARD.md — dated tag, not :latest, so
+  # toolchain drift is explicit.
+  MANYLINUX_AMD64: quay.io/pypa/manylinux_2_28_x86_64:2024.10.07-1
+  MANYLINUX_AARCH64: quay.io/pypa/manylinux_2_28_aarch64:2024.10.07-1
+  # musl images change less frequently; pin by digest-bearing tag.
+  MUSLLINUX_AMD64: quay.io/pypa/musllinux_1_2_x86_64:2024.10.07-1
+  MUSLLINUX_AARCH64: quay.io/pypa/musllinux_1_2_aarch64:2024.10.07-1
+
+jobs:
+  linux-amd64:
+    name: Linux (amd64)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Cache Key
+        id: cache_key
+        run: |
+          DUCKDB_VERSION=$(python3 ./scripts/print_duckdb_version.py)
+          echo "value=${{ runner.os }}-${{ runner.arch }}-$DUCKDB_VERSION" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/ccache
+          key: ccache-jdbc-${{ steps.cache_key.outputs.value }}
+      - name: Build
+        uses: ./.github/composite-actions/linux-build-docker
+        with:
+          docker_image: '${{ env.MANYLINUX_AMD64 }}'
+      - name: List Symbols
+        run: nm -gU ./build/release/libhaybarn_java.so_linux_amd64
+      - name: Check Module Name
+        run: java --module-path ./build/release/haybarn_jdbc.jar -d haybarn.jdbc
+      - name: JDBC Tests (in manylinux container)
+        uses: ./.github/composite-actions/linux-tests-docker
+        with:
+          docker_image: '${{ env.MANYLINUX_AMD64 }}'
+      - name: JDBC Tests (host)
+        uses: ./.github/composite-actions/linux-tests-host
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-linux-amd64
+          path: build/release/haybarn_jdbc.jar
+
+  linux-aarch64:
+    name: Linux (aarch64)
+    runs-on: ubuntu-24.04-arm
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/cache@v4
+        with:
+          path: ${{ github.workspace }}/ccache
+          key: ccache-jdbc-Linux-ARM64-${{ hashFiles('src/duckdb/**/*.cpp', 'src/duckdb/**/*.hpp') }}
+          restore-keys: |
+            ccache-jdbc-Linux-ARM64-
+      - uses: ./.github/composite-actions/linux-build-docker
+        with:
+          docker_image: '${{ env.MANYLINUX_AARCH64 }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-linux-aarch64
+          path: build/release/haybarn_jdbc.jar
+
+  linux-amd64-musl:
+    name: Linux (amd64 musl)
+    runs-on: ubuntu-24.04
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/composite-actions/linux-build-musl-docker
+        with:
+          docker_image: '${{ env.MUSLLINUX_AMD64 }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-linux-amd64-musl
+          path: build/release/haybarn_jdbc.jar
+
+  linux-aarch64-musl:
+    name: Linux (aarch64 musl)
+    runs-on: ubuntu-24.04-arm
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./.github/composite-actions/linux-build-musl-docker
+        with:
+          docker_image: '${{ env.MUSLLINUX_AARCH64 }}'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-linux-aarch64-musl
+          path: build/release/haybarn_jdbc.jar
+
+  macos-universal:
+    name: macOS (Universal)
+    runs-on: macos-15
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Build (universal)
+        env:
+          # JDBC's CMake supports DUCKDB_PLATFORM=osx_universal via the
+          # Makefile to compile both arm64 and x86_64 slices and lipo them.
+          DUCKDB_PLATFORM: osx_universal
+        run: make release
+      - name: JDBC Tests
+        run: |
+          java -cp build/release/haybarn_jdbc_tests.jar:build/release/haybarn_jdbc.jar \
+            farm.query.haybarn.TestDuckDBJDBC
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-osx-universal
+          path: build/release/haybarn_jdbc.jar
+
+  windows-amd64:
+    name: Windows (amd64)
+    runs-on: windows-2022
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Build
+        shell: cmd
+        run: |
+          mkdir build\release
+          cd build\release
+          cmake -G "Visual Studio 17 2022" -A x64 ..\..
+          cmake --build . --config Release --target haybarn_jdbc
+      - name: JDBC Tests
+        shell: cmd
+        run: |
+          java -cp build\release\haybarn_jdbc_tests.jar;build\release\haybarn_jdbc.jar ^
+            farm.query.haybarn.TestDuckDBJDBC
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-windows-amd64
+          path: build/release/haybarn_jdbc.jar
+
+  windows-aarch64:
+    name: Windows (aarch64)
+    runs-on: windows-11-arm
+    if: github.event_name != 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: arm64
+      - name: Build
+        shell: cmd
+        run: |
+          mkdir build\release
+          cd build\release
+          cmake -G "Visual Studio 17 2022" -A ARM64 ..\..
+          cmake --build . --config Release --target haybarn_jdbc
+      - uses: actions/upload-artifact@v4
+        with:
+          name: java-windows-aarch64
+          path: build/release/haybarn_jdbc.jar
+
+  maven-deploy:
+    name: Maven Central Deploy
+    # Only deploy on real haybarn-v* tag pushes — never on PRs or unstaged
+    # workflow_dispatch.
+    if: ${{ startsWith(github.ref, 'refs/tags/haybarn-v') || (github.event_name == 'workflow_dispatch' && inputs.publish) }}
+    runs-on: ubuntu-24.04
+    needs:
+      - linux-amd64
+      - linux-aarch64
+      - linux-amd64-musl
+      - linux-aarch64-musl
+      - macos-universal
+      - windows-amd64
+      - windows-aarch64
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - run: mkdir jdbc-artifacts
+      - uses: actions/download-artifact@v4
+        with: { name: java-linux-amd64, path: jdbc-artifacts/java-linux-amd64 }
+      - uses: actions/download-artifact@v4
+        with: { name: java-linux-aarch64, path: jdbc-artifacts/java-linux-aarch64 }
+      - uses: actions/download-artifact@v4
+        with: { name: java-linux-amd64-musl, path: jdbc-artifacts/java-linux-amd64-musl }
+      - uses: actions/download-artifact@v4
+        with: { name: java-linux-aarch64-musl, path: jdbc-artifacts/java-linux-aarch64-musl }
+      - uses: actions/download-artifact@v4
+        with: { name: java-osx-universal, path: jdbc-artifacts/java-osx-universal }
+      - uses: actions/download-artifact@v4
+        with: { name: java-windows-amd64, path: jdbc-artifacts/java-windows-amd64 }
+      - uses: actions/download-artifact@v4
+        with: { name: java-windows-aarch64, path: jdbc-artifacts/java-windows-aarch64 }
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      # Sonatype Central credentials + Haybarn GPG signing key. The publisher
+      # script reads MAVEN_USERNAME / MAVEN_PASSWORD env (Sonatype OSSRH style)
+      # and the GPG key is imported into the agent. All three secrets must be
+      # configured on Query-farm-haybarn/haybarn-jdbc.
+      - name: Combine JARs + GPG-sign + upload to Sonatype Central
+        env:
+          MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        run: |
+          mkdir -m 700 -p ~/.gnupg
+          printf 'pinentry-mode loopback\nno-tty\nbatch\n' > ~/.gnupg/gpg.conf
+          echo "${{ secrets.HAYBARN_GPG_PRIVATE_KEY }}" | gpg --batch --import
+          # Tag-ref version: `refs/tags/haybarn-v1.5.2` -> `1.5.2`.
+          VERSION="${GITHUB_REF_NAME#haybarn-v}"
+          if [ -z "$VERSION" ] || [ "$VERSION" = "$GITHUB_REF_NAME" ]; then
+            VERSION="0.0.0-dispatch-${{ github.run_id }}"
+          fi
+          python3 ./scripts/jdbc_maven_deploy.py "$VERSION" jdbc-artifacts .
+
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: java-jars
+          path: jdbc-artifacts
