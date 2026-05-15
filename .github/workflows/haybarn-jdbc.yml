@@ -186,7 +186,7 @@ jobs:
           mkdir build\release
           cd build\release
           cmake -G "Visual Studio 17 2022" -A x64 ..\..
-          cmake --build . --config Release --target haybarn_jdbc
+          cmake --build . --config Release --target jdbc
       - name: JDBC Tests
         shell: cmd
         run: |
@@ -218,7 +218,7 @@ jobs:
           mkdir build\release
           cd build\release
           cmake -G "Visual Studio 17 2022" -A ARM64 ..\..
-          cmake --build . --config Release --target haybarn_jdbc
+          cmake --build . --config Release --target jdbc
       - uses: actions/upload-artifact@v7
         with:
           name: java-windows-aarch64
