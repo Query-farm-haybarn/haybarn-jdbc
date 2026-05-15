@@ -12,20 +12,30 @@ runs:
     - name: Build
       shell: bash
       run: |
-        docker run                                   \
-        -v.:/duckdb                                  \
-        -e GEN=ninja                                 \
-        -e CC='ccache gcc'                           \
-        -e CXX='ccache g++'                          \
-        -e CCACHE_DIR=/duckdb/ccache                 \
-        -e JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
-        ${{ inputs.docker_image }}                    \
-        bash -c "
-          set -e
-          cat /etc/os-release
-          dnf install -y             \
-            ccache                   \
-            java-1.8.0-openjdk-devel \
-            ninja-build
-          make -C /duckdb release
-        "
+        docker run \
+          -v.:/duckdb \
+          -e GEN=ninja \
+          -e CC='ccache gcc' -e CXX='ccache g++' \
+          -e CCACHE_DIR=/duckdb/ccache \
+          -e CCACHE_BASEDIR=/duckdb \
+          -e CCACHE_NOHASHDIR=1 \
+          -e CCACHE_SLOPPINESS=time_macros,include_file_mtime,pch_defines \
+          -e CCACHE_COMPILERCHECK=content \
+          -e CCACHE_REMOTE_STORAGE \
+          -e JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
+          ${{ inputs.docker_image }} \
+          bash -c '
+            set -e
+            cat /etc/os-release
+            dnf install -y java-1.8.0-openjdk-devel ninja-build
+            # EPEL 8 ccache is 3.7.7 — too old for the HTTP remote-storage
+            # backend. Pull 4.13.6 from the upstream GitHub release.
+            CCACHE_VERSION=4.13.6
+            ARCH=$(uname -m)
+            curl -fsSL "https://github.com/ccache/ccache/releases/download/v${CCACHE_VERSION}/ccache-${CCACHE_VERSION}-linux-${ARCH}-glibc.tar.xz" -o /tmp/ccache.tar.xz
+            tar -xJf /tmp/ccache.tar.xz -C /tmp
+            install -m 0755 "/tmp/ccache-${CCACHE_VERSION}-linux-${ARCH}-glibc/ccache" /usr/local/bin/ccache
+            ccache --version
+            make -C /duckdb release
+            ccache -s
+          '

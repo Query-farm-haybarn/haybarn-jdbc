@@ -33,6 +33,16 @@ env:
   # musl images change less frequently; pin by digest-bearing tag.
   MUSLLINUX_AMD64: quay.io/pypa/musllinux_1_2_x86_64:2026.05.13-1
   MUSLLINUX_AARCH64: quay.io/pypa/musllinux_1_2_aarch64:2026.05.13-1
+  # ccache remote backend → Cloudflare Worker → R2 (shared with vcpkg).
+  # Workflow-level env so the macos-universal job picks it up directly, and
+  # the Linux composite actions forward it into docker via `-e CCACHE_REMOTE_STORAGE`
+  # (host env passthrough). ccache 4.9+ on the runner; the Linux docker
+  # containers install 4.13.6 from the upstream release (see composite actions).
+  CCACHE_REMOTE_STORAGE: "http://haybarn-vcpkg-cache.rusty-bb6.workers.dev/ccache|bearer-token=${{ secrets.HAYBARN_VCPKG_TOKEN }}|connect-timeout=10000|operation-timeout=30000"
+  CCACHE_BASEDIR: ${{ github.workspace }}
+  CCACHE_NOHASHDIR: "1"
+  CCACHE_SLOPPINESS: "time_macros,include_file_mtime,pch_defines"
+  CCACHE_COMPILERCHECK: "content"
 
 jobs:
   linux-amd64:
@@ -136,12 +146,18 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
+      - name: Install ccache + ninja
+        run: brew install ccache ninja
       - name: Build (universal)
         env:
           # JDBC's CMake supports DUCKDB_PLATFORM=osx_universal via the
           # Makefile to compile both arm64 and x86_64 slices and lipo them.
           DUCKDB_PLATFORM: osx_universal
-        run: make release
+          # ccache is set as the compiler launcher by DuckDB's CMake when on
+          # PATH; CCACHE_DIR persists the local cache; the workflow-level env
+          # block provides CCACHE_REMOTE_STORAGE + tuning.
+          CCACHE_DIR: ${{ github.workspace }}/.ccache
+        run: make release && ccache -s
       - name: JDBC Tests
         run: |
           java -cp build/release/haybarn_jdbc_tests.jar:build/release/haybarn_jdbc.jar \
