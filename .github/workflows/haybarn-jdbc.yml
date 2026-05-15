@@ -171,6 +171,12 @@ jobs:
     name: Windows (amd64)
     runs-on: windows-2022
     if: github.event_name != 'pull_request'
+    env:
+      # MSVC ccache override — ccache 4.6+ supports MSVC. CCACHE_COMPILERTYPE=msvc
+      # makes the auto-detect deterministic. Other ccache_* tuning vars come
+      # from the workflow-level env block at the top.
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPILERTYPE: msvc
     steps:
       - uses: actions/checkout@v6
         with:
@@ -180,13 +186,26 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
       - uses: ilammy/msvc-dev-cmd@v1
+      - name: Install ccache
+        shell: pwsh
+        run: choco install ccache --yes --no-progress
+      - uses: actions/cache@v5
+        with:
+          path: ${{ github.workspace }}/.ccache
+          key: ccache-jdbc-windows-amd64-${{ github.sha }}
+          restore-keys: |
+            ccache-jdbc-windows-amd64-
       - name: Build
         shell: cmd
         run: |
           mkdir build\release
           cd build\release
-          cmake -G "Visual Studio 17 2022" -A x64 ..\..
+          cmake -G "Ninja Multi-Config" ^
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache ^
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ^
+            ..\..
           cmake --build . --config Release --target jdbc
+          ccache -s
       - name: JDBC Tests
         shell: cmd
         run: |
@@ -201,6 +220,9 @@ jobs:
     name: Windows (aarch64)
     runs-on: windows-11-arm
     if: github.event_name != 'pull_request'
+    env:
+      CCACHE_DIR: ${{ github.workspace }}/.ccache
+      CCACHE_COMPILERTYPE: msvc
     steps:
       - uses: actions/checkout@v6
         with:
@@ -212,13 +234,26 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
         with:
           arch: arm64
+      - name: Install ccache
+        shell: pwsh
+        run: choco install ccache --yes --no-progress
+      - uses: actions/cache@v5
+        with:
+          path: ${{ github.workspace }}/.ccache
+          key: ccache-jdbc-windows-aarch64-${{ github.sha }}
+          restore-keys: |
+            ccache-jdbc-windows-aarch64-
       - name: Build
         shell: cmd
         run: |
           mkdir build\release
           cd build\release
-          cmake -G "Visual Studio 17 2022" -A ARM64 ..\..
+          cmake -G "Ninja Multi-Config" ^
+            -DCMAKE_C_COMPILER_LAUNCHER=ccache ^
+            -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ^
+            ..\..
           cmake --build . --config Release --target jdbc
+          ccache -s
       - uses: actions/upload-artifact@v7
         with:
           name: java-windows-aarch64
