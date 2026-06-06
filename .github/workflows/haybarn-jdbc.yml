@@ -310,7 +310,7 @@ jobs:
           mkdir -m 700 -p ~/.gnupg
           printf 'pinentry-mode loopback\nno-tty\nbatch\n' > ~/.gnupg/gpg.conf
           echo "${{ secrets.HAYBARN_GPG_PRIVATE_KEY }}" | gpg --batch --import
-          # Tag-ref version: `refs/tags/haybarn-v1.5.2` -> `1.5.2`.
+          # Tag-ref version: `refs/tags/haybarn-v1.5.3` -> `1.5.3`.
           VERSION="${GITHUB_REF_NAME#haybarn-v}"
           if [ -z "$VERSION" ] || [ "$VERSION" = "$GITHUB_REF_NAME" ]; then
             VERSION="0.0.0-dispatch-${{ github.run_id }}"

@@ -5,7 +5,7 @@ derived distribution of DuckDB ("Haybarn, powered by DuckDB"), published by
 Query Farm LLC.
 
 This is a hard fork of [duckdb/duckdb-java](https://github.com/duckdb/duckdb-java)
-based on tag `v1.5.2.1`, with the Java package, Maven coordinates, JNI library
+based on tag `v1.5.3.0`, with the Java package, Maven coordinates, JNI library
 name, and JDBC URL prefix rebranded to Haybarn. The vendored `src/duckdb/`
 engine tree is re-vendored from
 [Query-farm-haybarn/haybarn](https://github.com/Query-farm-haybarn/haybarn) so
@@ -20,7 +20,7 @@ extension repository URLs).
 <dependency>
   <groupId>farm.query.haybarn</groupId>
   <artifactId>haybarn_jdbc</artifactId>
-  <version>1.5.2</version>
+  <version>1.5.3</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ try (Connection conn = DriverManager.getConnection("jdbc:haybarn::memory:");
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery("SELECT version()")) {
     rs.next();
-    System.out.println(rs.getString(1));   // v1.5.2
+    System.out.println(rs.getString(1));   // v1.5.3
 }
 ```
 

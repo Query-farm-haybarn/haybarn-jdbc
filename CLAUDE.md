@@ -8,7 +8,7 @@ Guidance for Claude Code working in this repository.
 [Haybarn](https://github.com/Query-farm-haybarn/haybarn) — an independent
 derived distribution of DuckDB ("Haybarn, powered by DuckDB"), published by
 Query Farm LLC. This repo is a **hard fork** of `duckdb/duckdb-java` at tag
-`v1.5.2.1`.
+`v1.5.3.0`.
 
 All Haybarn-specific changes are a small, curated **commit stack** on top of
 the upstream tag — not scattered edits. Keep it that way: the stack must
@@ -39,7 +39,7 @@ stay easy to rebase onto future upstream tags.
 - **One commit = one concern.** Prefer additive files over edits to upstream
   files. When you must edit upstream, keep it surgical.
 
-## The Haybarn commit stack (on top of duckdb-java @ v1.5.2.1)
+## The Haybarn commit stack (on top of duckdb-java @ v1.5.3.0)
 
 | Concern | Key files |
 |---|---|

@@ -6,7 +6,7 @@ Haybarn is independent of and not endorsed by the DuckDB Foundation.
 DuckDB is a trademark of the DuckDB Foundation
 (https://duckdb.org/trademark_guidelines).
 
-This repository is a hard fork of duckdb/duckdb-java at tag v1.5.2.1. The
+This repository is a hard fork of duckdb/duckdb-java at tag v1.5.3.0. The
 upstream MIT LICENSE is preserved verbatim. Modifications introduced by
 Haybarn:
 
