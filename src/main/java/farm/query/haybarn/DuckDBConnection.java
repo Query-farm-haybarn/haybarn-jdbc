@@ -50,7 +50,7 @@ public final class DuckDBConnection implements java.sql.Connection {
 
     /**
      * User-supplied identifier for JFR memory monitoring (the value of the
-     * {@value DuckDBDriver#JDBC_JFR_MEMORY_MONITOR} property). Either {@code null}
+     * {@value HaybarnDriver#JDBC_JFR_MEMORY_MONITOR} property). Either {@code null}
      * (the user did not opt in, or this is the monitor's own internal duplicate
      * connection) or a non-empty string; empty or absent property values are
      * normalised to {@code null} in the constructor.
@@ -71,7 +71,7 @@ public final class DuckDBConnection implements java.sql.Connection {
     public static DuckDBConnection newConnection(String url, boolean readOnly, String sessionInitSQL,
                                                  Properties properties) throws SQLException {
         // Ensure the JFR periodic memory-usage event is registered for callers
-        // that bypass DuckDBDriver (which also calls this in its static init).
+        // that bypass HaybarnDriver (which also calls this in its static init).
         // Idempotent and a no-op on JVMs without JFR.
         JfrMemoryMonitor.init();
         if (null == properties) {
@@ -80,7 +80,7 @@ public final class DuckDBConnection implements java.sql.Connection {
         String dbName = dbNameFromUrl(url);
         String autoCommitStr = removeOption(properties, JDBC_AUTO_COMMIT);
         boolean autoCommit = isStringTruish(autoCommitStr, true);
-        String monitorName = removeOption(properties, DuckDBDriver.JDBC_JFR_MEMORY_MONITOR);
+        String monitorName = removeOption(properties, HaybarnDriver.JDBC_JFR_MEMORY_MONITOR);
         ByteBuffer nativeReference = DuckDBNative.duckdb_jdbc_startup(dbName.getBytes(UTF_8), readOnly, properties);
         return new DuckDBConnection(nativeReference, url, readOnly, sessionInitSQL, autoCommit, monitorName);
     }
