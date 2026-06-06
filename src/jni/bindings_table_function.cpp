@@ -137,7 +137,7 @@ JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1fun
 /*
  * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_table_function_set_extra_info
- * Signature: (Ljava/nio/ByteBuffer;Lorg/duckdb/DuckDBTableFunctionWrapper;)V
+ * Signature: (Ljava/nio/ByteBuffer;Lfarm/query/haybarn/DuckDBTableFunctionWrapper;)V
  */
 JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1table_1function_1set_1extra_1info(JNIEnv *env, jclass,
                                                                                                 jobject table_function,

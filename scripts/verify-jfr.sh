@@ -31,7 +31,7 @@ echo "java $java_major -- $JAR"
 step "running JFR unit tests"
 java --enable-native-access=ALL-UNNAMED \
      -cp "$TESTS:$JAR" \
-     org/duckdb/TestDuckDBJDBC test_jfr_memory
+     farm/query/haybarn/TestDuckDBJDBC test_jfr_memory
 
 # 2. End-to-end demo + jfr CLI inspection ------------------------------------
 

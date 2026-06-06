@@ -216,18 +216,18 @@ void create_refs(JNIEnv *env) {
 	J_Double = make_class_ref(env, "java/lang/Double");
 	J_String = make_class_ref(env, "java/lang/String");
 	J_BigDecimal = make_class_ref(env, "java/math/BigDecimal");
-	J_HugeInt = make_class_ref(env, "org/duckdb/DuckDBHugeInt");
+	J_HugeInt = make_class_ref(env, "farm/query/haybarn/DuckDBHugeInt");
 	J_ByteArray = make_class_ref(env, "[B");
 
-	J_Timestamp = make_class_ref(env, "org/duckdb/DuckDBTimestamp");
+	J_Timestamp = make_class_ref(env, "farm/query/haybarn/DuckDBTimestamp");
 	J_Timestamp_valueOf = get_static_method_id(env, J_Timestamp, "valueOf", "(Ljava/lang/Object;)Ljava/lang/Object;");
-	J_TimestampTZ = make_class_ref(env, "org/duckdb/DuckDBTimestampTZ");
+	J_TimestampTZ = make_class_ref(env, "farm/query/haybarn/DuckDBTimestampTZ");
 
-	J_DuckDBDate = make_class_ref(env, "org/duckdb/DuckDBDate");
+	J_DuckDBDate = make_class_ref(env, "farm/query/haybarn/DuckDBDate");
 	J_DuckDBDate_getDaysSinceEpoch = get_method_id(env, J_DuckDBDate, "getDaysSinceEpoch", "()J");
-	J_DuckDBTime = make_class_ref(env, "org/duckdb/DuckDBTime");
+	J_DuckDBTime = make_class_ref(env, "farm/query/haybarn/DuckDBTime");
 
-	J_DuckMap = make_class_ref(env, "org/duckdb/user/DuckDBMap");
+	J_DuckMap = make_class_ref(env, "farm/query/haybarn/user/DuckDBMap");
 	J_DuckMap_getSQLTypeName = get_method_id(env, J_DuckMap, "getSQLTypeName", "()Ljava/lang/String;");
 
 	J_List = make_class_ref(env, "java/util/List");
@@ -244,12 +244,12 @@ void create_refs(JNIEnv *env) {
 	J_UUID_getMostSignificantBits = get_method_id(env, J_UUID, "getMostSignificantBits", "()J");
 	J_UUID_getLeastSignificantBits = get_method_id(env, J_UUID, "getLeastSignificantBits", "()J");
 
-	J_DuckArray = make_class_ref(env, "org/duckdb/DuckDBArray");
-	J_DuckArray_init = get_method_id(env, J_DuckArray, "<init>", "(Lorg/duckdb/DuckDBVector;II)V");
+	J_DuckArray = make_class_ref(env, "farm/query/haybarn/DuckDBArray");
+	J_DuckArray_init = get_method_id(env, J_DuckArray, "<init>", "(Lfarm/query/haybarn/DuckDBVector;II)V");
 
-	J_DuckStruct = make_class_ref(env, "org/duckdb/DuckDBStruct");
+	J_DuckStruct = make_class_ref(env, "farm/query/haybarn/DuckDBStruct");
 	J_DuckStruct_init = get_method_id(env, J_DuckStruct, "<init>",
-	                                  "([Ljava/lang/String;[Lorg/duckdb/DuckDBVector;ILjava/lang/String;)V");
+	                                  "([Ljava/lang/String;[Lfarm/query/haybarn/DuckDBVector;ILjava/lang/String;)V");
 
 	J_Struct = make_class_ref(env, "java/sql/Struct");
 	J_Struct_getSQLTypeName = get_method_id(env, J_Struct, "getSQLTypeName", "()Ljava/lang/String;");
@@ -285,12 +285,12 @@ void create_refs(JNIEnv *env) {
 	J_HugeInt_toBigInteger = get_static_method_id(env, J_HugeInt, "toBigInteger", "(JJ)Ljava/math/BigInteger;");
 	J_HugeInt_toBigDecimal = get_static_method_id(env, J_HugeInt, "toBigDecimal", "(JJI)Ljava/math/BigDecimal;");
 
-	J_DuckResultSetMeta = make_class_ref(env, "org/duckdb/DuckDBResultSetMetaData");
+	J_DuckResultSetMeta = make_class_ref(env, "farm/query/haybarn/DuckDBResultSetMetaData");
 	J_DuckResultSetMeta_init = env->GetMethodID(J_DuckResultSetMeta, "<init>",
 	                                            "(II[Ljava/lang/String;[Ljava/lang/String;[Ljava/lang/String;Ljava/"
 	                                            "lang/String;[Ljava/lang/String;[Ljava/lang/String;)V");
 
-	J_DuckVector = make_class_ref(env, "org/duckdb/DuckDBVector");
+	J_DuckVector = make_class_ref(env, "farm/query/haybarn/DuckDBVector");
 
 	J_String_getBytes = get_method_id(env, J_String, "getBytes", "(Ljava/nio/charset/Charset;)[B");
 
@@ -304,28 +304,28 @@ void create_refs(JNIEnv *env) {
 	J_ByteOrder = make_class_ref(env, "java/nio/ByteOrder");
 	J_ByteOrder_NATIVE = make_static_method_call_ref(env, J_ByteOrder, "nativeOrder", "()Ljava/nio/ByteOrder;");
 
-	J_ProfilerPrintFormat = make_class_ref(env, "org/duckdb/ProfilerPrintFormat");
+	J_ProfilerPrintFormat = make_class_ref(env, "farm/query/haybarn/ProfilerPrintFormat");
 	J_ProfilerPrintFormat_QUERY_TREE =
-	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "QUERY_TREE", "Lorg/duckdb/ProfilerPrintFormat;");
+	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "QUERY_TREE", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 	J_ProfilerPrintFormat_JSON =
-	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "JSON", "Lorg/duckdb/ProfilerPrintFormat;");
+	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "JSON", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 	J_ProfilerPrintFormat_QUERY_TREE_OPTIMIZER = make_static_object_field_ref(
-	    env, J_ProfilerPrintFormat, "QUERY_TREE_OPTIMIZER", "Lorg/duckdb/ProfilerPrintFormat;");
+	    env, J_ProfilerPrintFormat, "QUERY_TREE_OPTIMIZER", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 	J_ProfilerPrintFormat_NO_OUTPUT =
-	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "NO_OUTPUT", "Lorg/duckdb/ProfilerPrintFormat;");
+	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "NO_OUTPUT", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 	J_ProfilerPrintFormat_HTML =
-	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "HTML", "Lorg/duckdb/ProfilerPrintFormat;");
+	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "HTML", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 	J_ProfilerPrintFormat_GRAPHVIZ =
-	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "GRAPHVIZ", "Lorg/duckdb/ProfilerPrintFormat;");
+	    make_static_object_field_ref(env, J_ProfilerPrintFormat, "GRAPHVIZ", "Lfarm/query/haybarn/ProfilerPrintFormat;");
 
-	J_QueryProgress = make_class_ref(env, "org/duckdb/QueryProgress");
+	J_QueryProgress = make_class_ref(env, "farm/query/haybarn/QueryProgress");
 	J_QueryProgress_init = get_method_id(env, J_QueryProgress, "<init>", "(DJJ)V");
 
-	J_DuckDBScalarFunctionWrapper = make_class_ref(env, "org/duckdb/DuckDBScalarFunctionWrapper");
+	J_DuckDBScalarFunctionWrapper = make_class_ref(env, "farm/query/haybarn/DuckDBScalarFunctionWrapper");
 	J_DuckDBScalarFunctionWrapper_execute =
 	    get_method_id(env, J_DuckDBScalarFunctionWrapper, "execute",
 	                  "(Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)V");
-	J_DuckDBTableFunctionWrapper = make_class_ref(env, "org/duckdb/DuckDBTableFunctionWrapper");
+	J_DuckDBTableFunctionWrapper = make_class_ref(env, "farm/query/haybarn/DuckDBTableFunctionWrapper");
 	J_DuckDBTableFunctionWrapper_executeBind =
 	    get_method_id(env, J_DuckDBTableFunctionWrapper, "executeBind", "(Ljava/nio/ByteBuffer;)V");
 	J_DuckDBTableFunctionWrapper_executeGlobalInit =

@@ -43,13 +43,13 @@ TESTS="$BUILD/duckdb_jdbc_tests.jar"
 
 # Confirm bytecode 52 (Java 8) ------------------------------------------------
 
-bc_hex=$(unzip -p "$JAR" org/duckdb/DuckDBMemoryEvent.class | od -An -N8 -tx1 | awk '{print $8}')
+bc_hex=$(unzip -p "$JAR" farm/query/haybarn/DuckDBMemoryEvent.class | od -An -N8 -tx1 | awk '{print $8}')
 [[ "$bc_hex" == "34" ]] || die "expected bytecode 0x34 (Java 8), got 0x$bc_hex"
 
 # 1. Unit tests on Java 8 + JFR ----------------------------------------------
 
 step "running JFR unit tests on Java 8 (jdk.jfr backport present)"
-java -cp "$TESTS:$JAR" org/duckdb/TestDuckDBJDBC test_jfr_memory
+java -cp "$TESTS:$JAR" farm/query/haybarn/TestDuckDBJDBC test_jfr_memory
 
 # 2. Fallback path: jfr.jar stripped from the bootclasspath -------------------
 
