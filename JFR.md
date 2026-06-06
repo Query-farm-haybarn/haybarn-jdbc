@@ -18,13 +18,13 @@ connection:
 ```java
 Properties props = new Properties();
 props.setProperty(DuckDBDriver.JDBC_JFR_MEMORY_MONITOR, "pricing-service");
-Connection conn = DriverManager.getConnection("jdbc:duckdb:/tmp/pricing.db", props);
+Connection conn = DriverManager.getConnection("jdbc:haybarn:/tmp/pricing.db", props);
 ```
 
 …or in the URL:
 
 ```
-jdbc:duckdb:/tmp/pricing.db;jdbc_jfr_memory_monitor=pricing-service
+jdbc:haybarn:/tmp/pricing.db;jdbc_jfr_memory_monitor=pricing-service
 ```
 
 The `<component-id>` is an arbitrary label chosen by the application;
@@ -104,9 +104,9 @@ The monitor is keyed on the **native DuckDB instance address**
 
 | URL / operation                          | Same `dbAddress`?                |
 | ---------------------------------------- | -------------------------------- |
-| `jdbc:duckdb:` (unnamed in-memory)       | **No** — fresh instance per call |
-| `jdbc:duckdb::memory:<name>`             | Yes, when `<name>` matches       |
-| `jdbc:duckdb:/path/to/file.db`           | Yes, when the path matches       |
+| `jdbc:haybarn:` (unnamed in-memory)       | **No** — fresh instance per call |
+| `jdbc:haybarn::memory:<name>`             | Yes, when `<name>` matches       |
+| `jdbc:haybarn:/path/to/file.db`           | Yes, when the path matches       |
 | `conn.duplicate()`                       | Yes, always                      |
 
 Connections that share an instance share a `dbAddress` and therefore

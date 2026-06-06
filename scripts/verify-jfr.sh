@@ -50,7 +50,7 @@ public class JfrDemo {
             r.start();
             Properties p = new Properties();
             p.setProperty("jdbc_jfr_memory_monitor", "verify-jfr");
-            try (Connection c = DriverManager.getConnection("jdbc:duckdb:", p);
+            try (Connection c = DriverManager.getConnection("jdbc:haybarn:", p);
                  Statement s = c.createStatement()) {
                 s.execute("CREATE TABLE t AS SELECT range AS i FROM range(2000000)");
                 Thread.sleep(2000);

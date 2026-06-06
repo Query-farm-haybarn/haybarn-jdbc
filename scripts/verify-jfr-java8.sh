@@ -63,17 +63,17 @@ public class NoJfrDemo {
     public static void main(String[] a) throws Exception {
         try { Class.forName("jdk.jfr.FlightRecorder"); throw new AssertionError("JFR present"); }
         catch (ClassNotFoundException ok) {}
-        Class.forName("org.duckdb.DuckDBDriver");
+        Class.forName("farm.query.haybarn.HaybarnDriver");
         Properties p = new Properties();
         p.setProperty("jdbc_jfr_memory_monitor", "ignored");
-        try (Connection c = DriverManager.getConnection("jdbc:duckdb:", p);
+        try (Connection c = DriverManager.getConnection("jdbc:haybarn:", p);
              Statement s = c.createStatement();
              ResultSet r = s.executeQuery("SELECT 42")) { r.next(); }
         Method f = ClassLoader.class.getDeclaredMethod("findLoadedClass", String.class);
         f.setAccessible(true);
         ClassLoader cl = ClassLoader.getSystemClassLoader();
-        if (f.invoke(cl, "org.duckdb.DuckDBMemoryMonitor") != null
-         || f.invoke(cl, "org.duckdb.DuckDBMemoryEvent")   != null)
+        if (f.invoke(cl, "farm.query.haybarn.DuckDBMemoryMonitor") != null
+         || f.invoke(cl, "farm.query.haybarn.DuckDBMemoryEvent")   != null)
             throw new AssertionError("JFR-dependent class was loaded");
         System.out.println("OK");
     }
