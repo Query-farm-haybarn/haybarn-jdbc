@@ -1799,7 +1799,7 @@ public class TestDuckDBJDBC {
             try (PreparedStatement stmt1 = conn.prepareStatement("PRAGMA user_agent");
                  ResultSet rs = stmt1.executeQuery()) {
                 assertTrue(rs.next());
-                assertTrue(rs.getString(1).matches("duckdb/.*(.*) jdbc"));
+                assertTrue(rs.getString(1).matches("haybarn/.*(.*) jdbc"));
             }
         }
     }
@@ -1814,7 +1814,7 @@ public class TestDuckDBJDBC {
             try (PreparedStatement stmt1 = conn.prepareStatement("PRAGMA user_agent");
                  ResultSet rs = stmt1.executeQuery()) {
                 assertTrue(rs.next());
-                assertTrue(rs.getString(1).matches("duckdb/.*(.*) jdbc CUSTOM_STRING"));
+                assertTrue(rs.getString(1).matches("haybarn/.*(.*) jdbc CUSTOM_STRING"));
             }
         }
     }
