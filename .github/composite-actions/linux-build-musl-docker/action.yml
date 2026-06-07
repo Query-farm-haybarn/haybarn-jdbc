@@ -13,7 +13,7 @@ runs:
       shell: bash
       run: |
         docker run \
-          -v.:/duckdb \
+          -v "${GITHUB_WORKSPACE}:/duckdb" \
           -e GEN=ninja \
           -e CC='ccache gcc' -e CXX='ccache g++' \
           -e CCACHE_DIR=/duckdb/ccache \
@@ -26,6 +26,8 @@ runs:
           ${{ inputs.docker_image }} \
           sh -c '
             set -e
+            # Confirm the source bind-mount attached before building.
+            ls -ld /duckdb && test -f /duckdb/Makefile
             apk add cmake curl g++ make openjdk8-jdk samurai xz
             # Replace Alpine's ccache with the upstream 4.13.6 musl-static
             # release so we have a known-recent version with HTTP remote

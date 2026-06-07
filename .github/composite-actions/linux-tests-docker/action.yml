@@ -13,7 +13,7 @@ runs:
       shell: bash
       run: |
         docker run                   \
-          -v.:/duckdb                \
+          -v "${GITHUB_WORKSPACE}:/duckdb" \
           ${{ inputs.docker_image }} \
           bash -c "
             set -e

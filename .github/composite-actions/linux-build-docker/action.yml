@@ -13,7 +13,7 @@ runs:
       shell: bash
       run: |
         docker run \
-          -v.:/duckdb \
+          -v "${GITHUB_WORKSPACE}:/duckdb" \
           -e GEN=ninja \
           -e CC='ccache gcc' -e CXX='ccache g++' \
           -e CCACHE_DIR=/duckdb/ccache \

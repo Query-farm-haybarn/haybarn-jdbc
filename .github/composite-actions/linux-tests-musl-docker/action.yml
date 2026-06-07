@@ -13,7 +13,7 @@ runs:
       shell: bash
       run: |
         docker run                                 \
-          -v.:/duckdb                              \
+          -v "${GITHUB_WORKSPACE}:/duckdb"          \
           -e GEN=ninja                             \
           -e JAVA_HOME=/usr/lib/jvm/java-8-openjdk \
           ${{ inputs.docker_image }}               \
