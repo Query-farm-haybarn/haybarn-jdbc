@@ -68,12 +68,15 @@ def get_snapshot_version():
     """
     Calculate SNAPSHOT version from the last release tag and current commit.
 
-    DuckDB uses 4-part versioning (e.g., v1.4.4.0). We increment the third
-    component (patch) and reset the fourth to 0 for SNAPSHOTs.
-    Example: v1.4.4.0 + commit abc1234 -> 1.4.5.0-abc1234-SNAPSHOT
+    Haybarn release tags look like `haybarn-v1.5.3` (and pre-releases like
+    `haybarn-v1.5.3-rc7`). We increment the third component (patch) and reset
+    the build component to 0 for SNAPSHOTs.
+    Example: haybarn-v1.5.3 + commit abc1234 -> 1.5.4.0-abc1234-SNAPSHOT
     """
     last_tag = run_cmd('git tag --sort=-committerdate').split('\n')[0]
-    version_regex = re.compile(r'^v(\d+)\.(\d+)\.(\d+)\.(\d+)$')
+    # Tolerate the `haybarn-` prefix, an optional leading `v`, an optional 4th
+    # numeric component, and a pre-release suffix (e.g. `-rc7`).
+    version_regex = re.compile(r'^(?:haybarn-)?v?(\d+)\.(\d+)\.(\d+)(?:\.\d+)?(?:[-+][0-9A-Za-z.-]+)?$')
     match = version_regex.search(last_tag)
     if not match:
         raise ValueError(f"Could not parse last tag: {last_tag}")
@@ -142,7 +145,7 @@ def create_combined_jar(artifact_dir, staging_dir, version):
         # Copy base jar excluding native libs
         with zipfile.ZipFile(base_jar) as src:
             for item in src.infolist():
-                if not item.filename.startswith('libduckdb_java.so'):
+                if not item.filename.startswith('libhaybarn_java.so'):
                     dst.writestr(item, src.read(item.filename))
 
         # Add native libraries from all platforms
@@ -150,7 +153,7 @@ def create_combined_jar(artifact_dir, staging_dir, version):
             build_jar = os.path.join(artifact_dir, build, 'haybarn_jdbc.jar')
             with zipfile.ZipFile(build_jar) as src:
                 for item in src.infolist():
-                    if item.filename.startswith('libduckdb_java.so'):
+                    if item.filename.startswith('libhaybarn_java.so'):
                         dst.writestr(item, src.read(item.filename))
 
     return combined_jar
@@ -173,7 +176,7 @@ def create_nolib_jar(artifact_dir, staging_dir, version):
     with zipfile.ZipFile(base_jar) as src:
         with zipfile.ZipFile(nolib_jar, 'w') as dst:
             for item in src.infolist():
-                if not item.filename.startswith('libduckdb_java.so'):
+                if not item.filename.startswith('libhaybarn_java.so'):
                     dst.writestr(item, src.read(item.filename))
 
     return nolib_jar
@@ -188,37 +191,31 @@ def create_pom(staging_dir, version):
   <artifactId>{ARTIFACT_ID}</artifactId>
   <version>{version}</version>
   <packaging>jar</packaging>
-  <name>DuckDB JDBC Driver</name>
-  <description>A JDBC-Compliant driver for the DuckDB data management system</description>
-  <url>https://www.duckdb.org</url>
+  <name>Haybarn JDBC Driver</name>
+  <description>JDBC driver for Haybarn, an independent derived distribution of DuckDB ("Haybarn, powered by DuckDB"), published by Query Farm LLC.</description>
+  <url>https://github.com/Query-farm-haybarn/haybarn-jdbc</url>
 
   <licenses>
     <license>
       <name>MIT License</name>
-      <url>https://raw.githubusercontent.com/duckdb/duckdb/main/LICENSE</url>
+      <url>https://raw.githubusercontent.com/Query-farm-haybarn/haybarn-jdbc/main/LICENSE</url>
       <distribution>repo</distribution>
     </license>
   </licenses>
 
   <developers>
     <developer>
-      <name>Mark Raasveldt</name>
-      <email>mark@duckdblabs.com</email>
-      <organization>DuckDB Labs</organization>
-      <organizationUrl>https://www.duckdblabs.com</organizationUrl>
-    </developer>
-    <developer>
-      <name>Hannes Muehleisen</name>
-      <email>hannes@duckdblabs.com</email>
-      <organization>DuckDB Labs</organization>
-      <organizationUrl>https://www.duckdblabs.com</organizationUrl>
+      <name>Query Farm</name>
+      <email>hello@query.farm</email>
+      <organization>Query Farm LLC</organization>
+      <organizationUrl>https://query.farm</organizationUrl>
     </developer>
   </developers>
 
   <scm>
-    <connection>scm:git:git://github.com/duckdb/duckdb-java.git</connection>
-    <developerConnection>scm:git:ssh://github.com:duckdb/duckdb-java.git</developerConnection>
-    <url>https://github.com/duckdb/duckdb-java</url>
+    <connection>scm:git:git://github.com/Query-farm-haybarn/haybarn-jdbc.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:Query-farm-haybarn/haybarn-jdbc.git</developerConnection>
+    <url>https://github.com/Query-farm-haybarn/haybarn-jdbc</url>
   </scm>
 </project>
 """
@@ -230,7 +227,7 @@ def create_pom(staging_dir, version):
 def create_sources_jar(jdbc_root, staging_dir, version):
     """Create sources JAR."""
     sources_jar = os.path.join(staging_dir, f'haybarn_jdbc-{version}-sources.jar')
-    run_cmd(f'jar -cvf {sources_jar} -C {jdbc_root}/src/main/java org')
+    run_cmd(f'jar -cvf {sources_jar} -C {jdbc_root}/src/main/java farm')
     return sources_jar
 
 
