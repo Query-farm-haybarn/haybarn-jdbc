@@ -35,6 +35,31 @@ if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
 endif()
 
 
+# Haybarn: stamp the embedded engine's release version explicitly.
+#
+# vendor.py bakes whatever `git describe` produced for the engine checkout into
+# src/duckdb/.../pragma_version.cpp. For an rc engine tag that resolves to a
+# "-dev" string (e.g. v1.5.4-dev128, 128 commits past the upstream v1.5.3 base).
+# DuckDB's extension loader treats any version containing "-dev" as a non-release
+# and resolves extensions from
+#   <repo>/core/<git-source-id>/<platform>/...   (e.g. .../core/c6674f9baf/...)
+# instead of
+#   <repo>/core/<version>/<platform>/...         (e.g. .../core/v1.5.3/...)
+# Haybarn publishes extensions under the release version (v1.5.3) even for rc
+# engine builds, so the source-id path 404s. Override DUCKDB_VERSION (the value
+# DuckDB::LibraryVersion() returns) to the release version so IsRelease() is true
+# and the extension path uses v1.5.3. pragma_version.cpp guards each #define with
+# #ifndef, so these compile-time definitions win; the vendored DUCKDB_SOURCE_ID
+# is left intact for traceability. Bump this in lockstep with the engine release.
+set(HAYBARN_ENGINE_VERSION "v1.5.3"
+    CACHE STRING "Release version stamped into the embedded Haybarn engine")
+string(REGEX REPLACE "^v" "" HAYBARN_ENGINE_VERSION_NUM "${HAYBARN_ENGINE_VERSION}")
+string(REPLACE "." ";" HAYBARN_ENGINE_VERSION_PARTS "${HAYBARN_ENGINE_VERSION_NUM}")
+list(GET HAYBARN_ENGINE_VERSION_PARTS 0 HAYBARN_ENGINE_VERSION_MAJOR)
+list(GET HAYBARN_ENGINE_VERSION_PARTS 1 HAYBARN_ENGINE_VERSION_MINOR)
+list(GET HAYBARN_ENGINE_VERSION_PARTS 2 HAYBARN_ENGINE_VERSION_PATCH)
+
+
 # variables set by vendor.py
 
 set(DUCKDB_INCLUDE_DIRS
@@ -164,7 +189,11 @@ target_compile_definitions(haybarn_java PRIVATE
   -DDUCKDB_BUILD_LIBRARY
   -DDUCKDB_STATIC_BUILD
   -DDUCKDB_EXTENSION_AUTOLOAD_DEFAULT
-  -DDUCKDB_EXTENSION_AUTOINSTALL_DEFAULT)
+  -DDUCKDB_EXTENSION_AUTOINSTALL_DEFAULT
+  "-DDUCKDB_VERSION=\"${HAYBARN_ENGINE_VERSION}\""
+  -DDUCKDB_MAJOR_VERSION=${HAYBARN_ENGINE_VERSION_MAJOR}
+  -DDUCKDB_MINOR_VERSION=${HAYBARN_ENGINE_VERSION_MINOR}
+  "-DDUCKDB_PATCH_VERSION=\"${HAYBARN_ENGINE_VERSION_PATCH}\"")
 
 if(NOT MSVC AND NOT ZOS)
   target_compile_definitions(haybarn_java PRIVATE
