@@ -306,6 +306,7 @@ jobs:
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.HAYBARN_GPG_PASSPHRASE }}
         run: |
           mkdir -m 700 -p ~/.gnupg
           printf 'pinentry-mode loopback\nno-tty\nbatch\n' > ~/.gnupg/gpg.conf

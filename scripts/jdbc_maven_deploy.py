@@ -202,7 +202,18 @@ for file in files_to_deploy:
   file_name = path.basename(file)
   bundle_file = path.join(bundle_dir, file_name)
   shutil.copyfile(file, bundle_file)
-  subprocess.run(["gpg", "--sign", "-ab", file_name], cwd=bundle_dir)
+  # The Haybarn signing key is passphrase-protected. In CI the passphrase is
+  # supplied via the GPG_PASSPHRASE env (from the HAYBARN_GPG_PASSPHRASE secret)
+  # and fed to gpg over stdin with loopback pinentry. Locally, an unset
+  # GPG_PASSPHRASE falls back to interactive/agent-cached signing.
+  gpg_sign_cmd = ["gpg", "--batch", "--yes", "--pinentry-mode", "loopback"]
+  gpg_passphrase = os.environ.get("GPG_PASSPHRASE")
+  gpg_input = None
+  if gpg_passphrase:
+    gpg_sign_cmd += ["--passphrase-fd", "0"]
+    gpg_input = (gpg_passphrase + "\n").encode("utf-8")
+  gpg_sign_cmd += ["--sign", "-ab", file_name]
+  subprocess.run(gpg_sign_cmd, cwd=bundle_dir, input=gpg_input, check=True)
   with open(bundle_file, "rb") as fd:
     file_bytes = fd.read()
   for alg in ["md5", "sha1", "sha256"]:
