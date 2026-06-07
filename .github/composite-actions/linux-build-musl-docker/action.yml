@@ -1,10 +1,5 @@
 name: 'Linux Build Musl Docker'
-description: 'Linux build with musl libc in Docker'
-inputs:
-  docker_image:
-    description: 'Docker image name'
-    required: true
-    default: ''
+description: 'Linux musl-libc build in Alpine, matching the Haybarn engine musl recipe'
 
 runs:
   using: "composite"
@@ -12,32 +7,34 @@ runs:
     - name: Build
       shell: bash
       run: |
+        # Match the Haybarn engine's musl build (LinuxRelease.yml): plain
+        # alpine:3.22, mounted at the same absolute path inside and outside the
+        # container (-v$PWD:$PWD), built with `make -C $PWD`. The pypa
+        # musllinux_1_2 images we used previously failed `make -C /duckdb` on the
+        # CI runners; the engine's alpine recipe builds musl binaries reliably in
+        # the same environment, so we align with it. alpine:3.22 is multi-arch,
+        # so the same image serves amd64 and arm64 runners. Alpine ccache 4.11.3
+        # has http-storage, so the R2 remote cache works without the upstream
+        # musl-static download.
+        export PWD=$(pwd)
         docker run \
-          -v "${GITHUB_WORKSPACE}:/duckdb" \
+          -v"$PWD:$PWD" \
           -e GEN=ninja \
           -e CC='ccache gcc' -e CXX='ccache g++' \
-          -e CCACHE_DIR=/duckdb/ccache \
-          -e CCACHE_BASEDIR=/duckdb \
+          -e CCACHE_DIR="$PWD/ccache" \
+          -e CCACHE_BASEDIR="$PWD" \
           -e CCACHE_NOHASHDIR=1 \
           -e CCACHE_SLOPPINESS=time_macros,include_file_mtime,pch_defines \
           -e CCACHE_COMPILERCHECK=content \
           -e CCACHE_REMOTE_STORAGE \
           -e JAVA_HOME=/usr/lib/jvm/java-8-openjdk \
-          ${{ inputs.docker_image }} \
-          sh -c '
+          alpine:3.22 \
+          sh -c "
             set -e
-            # Confirm the source bind-mount attached before building.
-            ls -ld /duckdb && test -f /duckdb/Makefile
-            apk add cmake curl g++ make openjdk8-jdk samurai xz
-            # Replace Alpine's ccache with the upstream 4.13.6 musl-static
-            # release so we have a known-recent version with HTTP remote
-            # storage support, matching the glibc build path.
-            CCACHE_VERSION=4.13.6
-            ARCH=$(uname -m)
-            curl -fsSL "https://github.com/ccache/ccache/releases/download/v${CCACHE_VERSION}/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static.tar.xz" -o /tmp/ccache.tar.xz
-            tar -xJf /tmp/ccache.tar.xz -C /tmp
-            install -m 0755 "/tmp/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static/ccache" /usr/local/bin/ccache
+            apk add ccache cmake curl g++ git make openjdk8-jdk samurai
             ccache --version
-            make -C /duckdb release
+            git config --global --add safe.directory '$PWD'
+            test -f '$PWD/Makefile'
+            make -C '$PWD' release
             ccache -s
-          '
+          "

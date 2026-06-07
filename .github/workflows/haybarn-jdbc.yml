@@ -30,9 +30,8 @@ env:
   # toolchain drift is explicit.
   MANYLINUX_AMD64: quay.io/pypa/manylinux_2_28_x86_64:2026.05.13-1
   MANYLINUX_AARCH64: quay.io/pypa/manylinux_2_28_aarch64:2026.05.13-1
-  # musl images change less frequently; pin by digest-bearing tag.
-  MUSLLINUX_AMD64: quay.io/pypa/musllinux_1_2_x86_64:2026.05.13-1
-  MUSLLINUX_AARCH64: quay.io/pypa/musllinux_1_2_aarch64:2026.05.13-1
+  # musl builds use plain alpine:3.22 (hardcoded in the musl composite action),
+  # matching the Haybarn engine's musl recipe — see linux-build-musl-docker.
   # ccache remote backend → Cloudflare Worker → R2 (shared with vcpkg).
   # Workflow-level env so the macos-universal job picks it up directly, and
   # the Linux composite actions forward it into docker via `-e CCACHE_REMOTE_STORAGE`
@@ -111,8 +110,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/composite-actions/linux-build-musl-docker
-        with:
-          docker_image: '${{ env.MUSLLINUX_AMD64 }}'
       - uses: actions/upload-artifact@v7
         with:
           name: java-linux-amd64-musl
@@ -127,8 +124,6 @@ jobs:
         with:
           fetch-depth: 0
       - uses: ./.github/composite-actions/linux-build-musl-docker
-        with:
-          docker_image: '${{ env.MUSLLINUX_AARCH64 }}'
       - uses: actions/upload-artifact@v7
         with:
           name: java-linux-aarch64-musl
