@@ -25,6 +25,28 @@ stay easy to rebase onto future upstream tags.
 - **Don't rename the C API header (`duckdb.h`) inside `src/duckdb/`.** That's
   the upstream C surface and Haybarn is intentionally ABI-compatible with
   it. The JNI link uses it as-is.
+- **The embedded engine version is overridden at build time — keep it a clean
+  release string.** `vendor.py` bakes whatever `git describe` produced for the
+  engine checkout into `src/duckdb/.../pragma_version.cpp` as `DUCKDB_VERSION`.
+  Haybarn's rc tags sit N commits past the upstream `v1.5.3` base, so describe
+  yields a `-dev` string (e.g. `v1.5.4-dev128`). DuckDB's extension loader
+  (`ExtensionHelper::IsRelease`) treats any `-dev` version as a non-release and
+  fetches extensions from `<repo>/core/<git-source-id>/<platform>/…` instead of
+  `<repo>/core/<version>/…` — which **404s**, because Haybarn publishes
+  extensions under the release version (`v1.5.3`) even for rc engine builds.
+  We fix this by overriding `DUCKDB_VERSION` to the release version via
+  `HAYBARN_ENGINE_VERSION` in **both** `CMakeLists.txt.in` (template) and the
+  generated `CMakeLists.txt` (`pragma_version.cpp` guards each `#define` with
+  `#ifndef`, so the build-time value wins). The vendored `DUCKDB_SOURCE_ID` is
+  left as the real engine commit for traceability. **Bump
+  `HAYBARN_ENGINE_VERSION` in lockstep with every release.**
+- **musl natives build in plain `alpine:3.22`, not the pypa `musllinux_1_2`
+  images.** The musllinux images failed `make` against the bind-mounted source
+  on the CI runners; the Haybarn engine builds musl with `alpine:3.22` in the
+  same environment, so `linux-build-musl-docker` mirrors it
+  (`-v$PWD:$PWD`, `git config --global --add safe.directory $PWD`,
+  `make -C $PWD release`). alpine ccache 4.11.x has `http-storage`, so the R2
+  remote cache works without a separate ccache download.
 - **Trademark compliance is mandatory.** Product name is always "Haybarn",
   never "DuckDB Haybarn". DuckDB only appears descriptively
   ("powered by DuckDB", "derived distribution of DuckDB"). Keep the MIT
@@ -47,7 +69,8 @@ stay easy to rebase onto future upstream tags.
 | rebrand: build system + artifacts | `CMakeLists.txt{,.in}`, `Makefile`, `META-INF/MANIFEST.MF`, `scripts/jdbc_maven_deploy*.py`, `haybarn_java.{def,exp,map}`, `src/jni/haybarn_java.cpp` |
 | vendor: refresh `src/duckdb/` | `vendor.py` (re-run), `src/duckdb/`, `CMakeLists.txt` |
 | docs | `README.md`, `NOTICE`, `CLAUDE.md` |
-| ci: Haybarn workflow | `.github/workflows/haybarn-jdbc.yml` |
+| ci: Haybarn workflow | `.github/workflows/haybarn-jdbc.yml`, `.github/composite-actions/*` (musl = `alpine:3.22`) |
+| build: stamp release engine version | `CMakeLists.txt{,.in}` (`HAYBARN_ENGINE_VERSION`) |
 
 ## Naming summary
 
@@ -73,18 +96,63 @@ make test          # runs farm.query.haybarn.TestDuckDBJDBC against the build
 
 ## Releasing
 
-Tag `haybarn-v<version>` triggers `.github/workflows/haybarn-jdbc.yml`:
+Pushing tag `haybarn-v<version>` triggers `.github/workflows/haybarn-jdbc.yml`:
 
-1. Per-platform JNI build matrix (Linux x64/arm64, macOS universal, Windows
-   x64/arm64).
-2. Each platform contributes a `haybarn_jdbc.jar` with its native library
-   bundled in.
-3. `jdbc_maven_deploy.py` combines per-arch JARs into the fat `haybarn_jdbc.jar`
-   + per-classifier JARs + sources + javadoc + POM.
-4. GPG-signs with the Haybarn release key and uploads to Sonatype Central.
+1. Per-platform build matrix: Linux amd64/arm64 (glibc, `manylinux_2_28`),
+   Linux amd64/arm64 (musl, `alpine:3.22`), macOS universal (`macos-15`,
+   JDK 21, `DUCKDB_PLATFORM=osx_universal`), Windows amd64/arm64. Each uploads
+   a `haybarn_jdbc.jar` with its native library bundled. Only the Linux-amd64
+   and macOS/Windows jobs run the test suite.
+2. `maven-deploy` waits on **all 7** platform jobs, then `jdbc_maven_deploy.py`
+   combines them into the fat `haybarn_jdbc.jar` + per-classifier jars
+   (`_nolib`, per-arch incl. `*_musl`) + sources + javadoc + POM, GPG-signs
+   each, and uploads to the Sonatype Central Portal
+   (`https://central.sonatype.com/api/v1/publisher/upload`).
 
-Sonatype OSSRH credentials and the GPG key must be configured as GitHub
-secrets — see the workflow file for the required secret names.
+`publishingType=AUTOMATIC` (in `jdbc_maven_deploy.py`): a fully-green run
+**publishes to Maven Central immediately and permanently** — there's no manual
+gate and a version can't be un-published. To stage/inspect a release first,
+temporarily switch that to `USER_MANAGED`.
+
+### Required GitHub secrets (set on `Query-farm-haybarn/haybarn-jdbc`)
+
+| Secret | Source / notes |
+|---|---|
+| `MAVEN_CENTRAL_USERNAME` / `MAVEN_CENTRAL_PASSWORD` | Sonatype Central Portal token (locally in `~/.gradle/gradle.properties` as `mavenCentralUsername`/`mavenCentralPassword`) |
+| `HAYBARN_GPG_PRIVATE_KEY` | ASCII-armored private key; the deploy step imports it with `gpg --import` |
+| `HAYBARN_GPG_PASSPHRASE` | passphrase, fed to `gpg --sign` over stdin (loopback). The key is passphrase-protected, so this is required or signing fails in CI. |
+
+Signing key: `A4B1F47762F604DFD362F6D623330D66D8464D95` (Query Farm LLC
+`<hello@query.farm>`), published on `keyserver.ubuntu.com`. Central namespace
+`farm.query` is DNS-verified (TXT on `query.farm`) and covers
+`farm.query.haybarn.*`.
+
+### Per-release version bump checklist
+
+The release version lives in several places — update them together:
+
+- `HAYBARN_ENGINE_VERSION` in **`CMakeLists.txt.in` and `CMakeLists.txt`**
+  (the engine version stamped into the binary — see the Hard rule; gates
+  extension resolution and `SELECT version()`).
+- `Bundle-Version` in `META-INF/MANIFEST.MF`.
+- The `<version>` examples in `README.md`.
+- Re-vendor `src/duckdb/` from the matching engine tag if the engine changed.
+- Confirm extensions are published at `…/core/v<version>/<platform>/` before
+  releasing (platforms: `linux_amd64`, `linux_arm64`, `*_musl`,
+  `windows_amd64`, `osx_arm64`, `osx_amd64` — note the macOS universal binary
+  reports the **runtime** arch, e.g. `osx_arm64`, not `osx_universal`).
+
+Then `git tag haybarn-v<version> && git push origin haybarn-v<version>`. The
+workflow strips `haybarn-v` to derive the Maven version (`1.5.3`).
+
+### Known flake
+
+`TestNoLib.test_nolib_by_name` (macOS) spawns a child JVM that loads the engine
+lib by name and autoloads the `excel` extension; it occasionally `SIGABRT`s
+(exit 134) on the `macos-15` runner. It passes locally and on rerun, so it is a
+runner-environment flake, not a packaging bug — `gh run rerun <id> --failed`
+re-runs just the failed macOS job (successful platforms' artifacts are reused).
+Candidate to harden.
 
 ## Related Haybarn repos
 
