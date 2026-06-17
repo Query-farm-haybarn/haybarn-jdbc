@@ -51,7 +51,7 @@ endif()
 # and the extension path uses v1.5.3. pragma_version.cpp guards each #define with
 # #ifndef, so these compile-time definitions win; the vendored DUCKDB_SOURCE_ID
 # is left intact for traceability. Bump this in lockstep with the engine release.
-set(HAYBARN_ENGINE_VERSION "v1.5.3"
+set(HAYBARN_ENGINE_VERSION "v1.5.4"
     CACHE STRING "Release version stamped into the embedded Haybarn engine")
 string(REGEX REPLACE "^v" "" HAYBARN_ENGINE_VERSION_NUM "${HAYBARN_ENGINE_VERSION}")
 string(REPLACE "." ";" HAYBARN_ENGINE_VERSION_PARTS "${HAYBARN_ENGINE_VERSION_NUM}")

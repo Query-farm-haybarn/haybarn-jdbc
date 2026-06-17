@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Haybarn JDBC Driver
 Bundle-SymbolicName: farm.query.haybarn.haybarn_jdbc
-Bundle-Version: 1.5.3.0
+Bundle-Version: 1.5.4.0
 Bundle-Vendor: Query Farm LLC
 Bundle-Description: JDBC driver for Haybarn — a derived distribution of DuckDB, powered by DuckDB
 Bundle-License: https://raw.githubusercontent.com/Query-farm-haybarn/haybarn/main/LICENSE
