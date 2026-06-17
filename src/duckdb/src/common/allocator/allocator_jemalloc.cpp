@@ -8,6 +8,7 @@
 #if !defined(WIN32) && INTPTR_MAX == INT64_MAX
 
 #include "jemalloc/jemalloc.h"
+#include "duckdb/common/string_util.hpp"
 #include "duckdb/malloc_ncpus.h"
 
 #else
