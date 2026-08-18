@@ -20,7 +20,7 @@ extension repository URLs).
 <dependency>
   <groupId>farm.query.haybarn</groupId>
   <artifactId>haybarn_jdbc</artifactId>
-  <version>1.5.5</version>
+  <version>1.5.5-rc1</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ try (Connection conn = DriverManager.getConnection("jdbc:haybarn::memory:");
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery("SELECT version()")) {
     rs.next();
-    System.out.println(rs.getString(1));   // v1.5.3
+    System.out.println(rs.getString(1));   // v1.5.5
 }
 ```
 
