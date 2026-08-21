@@ -51,8 +51,15 @@ endif()
 # and the extension path uses v1.5.3. pragma_version.cpp guards each #define with
 # #ifndef, so these compile-time definitions win; the vendored DUCKDB_SOURCE_ID
 # is left intact for traceability. Bump this in lockstep with the engine release.
-set(HAYBARN_ENGINE_VERSION "v1.5.5"
-    CACHE STRING "Release version stamped into the embedded Haybarn engine")
+# Deliberately a normal variable, NOT a CACHE STRING: a cache entry left behind
+# by an older build directory silently wins over the value written here (plain
+# `set(... CACHE ...)` never overwrites an existing cache entry), so bumping this
+# file would be a no-op and the build would stamp a stale engine version --
+# sending extension resolution to <repo>/core/<old-version>/ and loading
+# ABI-mismatched extensions. Nothing passes -DHAYBARN_ENGINE_VERSION, so the
+# cache bought nothing. This file is the single source of truth; bump it in
+# lockstep with the engine release.
+set(HAYBARN_ENGINE_VERSION "v1.5.5")
 string(REGEX REPLACE "^v" "" HAYBARN_ENGINE_VERSION_NUM "${HAYBARN_ENGINE_VERSION}")
 string(REPLACE "." ";" HAYBARN_ENGINE_VERSION_PARTS "${HAYBARN_ENGINE_VERSION_NUM}")
 list(GET HAYBARN_ENGINE_VERSION_PARTS 0 HAYBARN_ENGINE_VERSION_MAJOR)
