@@ -203,6 +203,30 @@ void MainHeader::CheckMagicBytes(QueryContext context, FileHandle &handle) {
 	}
 }
 
+// The version label below names the upstream storage-format version (which Haybarn
+// preserves unchanged for cross-distribution file compatibility), not a Haybarn release
+// version. The migration link points at the canonical storage-format doc.
+static void ShowUnsupportedStorageVersionError(const uint64_t version_number) {
+	auto version = GetDuckDBVersions(version_number);
+	string version_text;
+	if (!version.empty()) {
+		// Known version.
+		version_text = "storage format version " + string(version);
+	} else if (version_number > VERSION_NUMBER_UPPER) {
+		version_text = "a newer version of Haybarn / DuckDB";
+	} else {
+		version_text = "an older development version of Haybarn / DuckDB";
+	}
+	throw IOException(
+	    "Trying to read a database file with version number %lld, but we can only read versions between %lld and "
+	    "%lld.\n"
+	    "The database file was created with %s.\n\n"
+	    "Newer storage versions might introduce backward incompatible changes (possibly guarded by compatibility "
+	    "settings).\n"
+	    "See the storage page for migration strategy and more information: https://duckdb.org/internals/storage",
+	    version_number, VERSION_NUMBER_LOWER, VERSION_NUMBER_UPPER, version_text);
+}
+
 MainHeader MainHeader::Read(ReadStream &source) {
 	data_t magic_bytes[MAGIC_BYTE_SIZE];
 
@@ -214,29 +238,10 @@ MainHeader MainHeader::Read(ReadStream &source) {
 
 	header.version_number = source.Read<uint64_t>();
 
-	// Check the version number to determine if we can read this file. The "DuckDB version"
-	// label below names the upstream storage-format version (which Haybarn preserves
-	// unchanged for cross-distribution file compatibility), not a Haybarn release
-	// version. The migration link points at the canonical storage-format doc.
-	if (header.version_number < VERSION_NUMBER_LOWER || header.version_number > VERSION_NUMBER_UPPER) {
-		auto version = GetDuckDBVersions(header.version_number);
-		string version_text;
-		if (!version.empty()) {
-			// Known version.
-			version_text = "storage format version " + string(version);
-		} else {
-			version_text = string("an ") +
-			               (VERSION_NUMBER_UPPER > header.version_number ? "older development" : "newer") +
-			               string(" version of Haybarn / DuckDB");
-		}
-		throw IOException(
-		    "Trying to read a database file with version number %lld, but we can only read versions between %lld and "
-		    "%lld.\n"
-		    "The database file was created with %s.\n\n"
-		    "Newer storage versions might introduce backward incompatible changes (possibly guarded by compatibility "
-		    "settings).\n"
-		    "See the storage page for migration strategy and more information: https://duckdb.org/internals/storage",
-		    header.version_number, VERSION_NUMBER_LOWER, VERSION_NUMBER_UPPER, version_text);
+	// Check the version number to determine if we can read this file.
+	if (header.version_number != MainHeader::DEPRECATED_VERSION_NUMBER &&
+	    (header.version_number < VERSION_NUMBER_LOWER || header.version_number > VERSION_NUMBER_UPPER)) {
+		ShowUnsupportedStorageVersionError(header.version_number);
 	}
 
 	// Read the flags.
@@ -459,6 +464,15 @@ void SingleFileBlockManager::CheckAndAddEncryptionKey(MainHeader &main_header) {
 	return CheckAndAddEncryptionKey(main_header, *options.encryption_options.user_key);
 }
 
+//! Open through the client file system when available, so session settings and logger apply
+static FileSystem &GetDatabaseFileSystem(QueryContext context, AttachedDatabase &db) {
+	auto client_context = context.GetClientContext();
+	if (client_context) {
+		return FileSystem::GetFileSystem(*client_context);
+	}
+	return FileSystem::Get(db);
+}
+
 void SingleFileBlockManager::CreateNewDatabase(QueryContext context) {
 	auto flags = GetFileFlags(true);
 
@@ -469,7 +483,7 @@ void SingleFileBlockManager::CreateNewDatabase(QueryContext context) {
 	}
 
 	// open the RDBMS handle
-	auto &fs = FileSystem::Get(db);
+	auto &fs = GetDatabaseFileSystem(context, db);
 	handle = fs.OpenFile(path, flags);
 	header_buffer.Clear();
 
@@ -571,7 +585,7 @@ void SingleFileBlockManager::LoadExistingDatabase(QueryContext context) {
 	auto flags = GetFileFlags(false);
 
 	// open the RDBMS handle
-	auto &fs = FileSystem::Get(db);
+	auto &fs = GetDatabaseFileSystem(context, db);
 	handle = fs.OpenFile(path, flags);
 	if (!handle) {
 		// this can only happen in read-only mode - as that is when we set FILE_FLAGS_NULL_IF_NOT_EXISTS
@@ -656,6 +670,11 @@ void SingleFileBlockManager::LoadExistingDatabase(QueryContext context) {
 	DatabaseHeader h2;
 	ReadAndChecksum(context, header_buffer, Storage::FILE_HEADER_SIZE * 2ULL);
 	h2 = DeserializeDatabaseHeader(main_header, header_buffer.buffer);
+
+	if (main_header.version_number == MainHeader::DEPRECATED_VERSION_NUMBER) {
+		auto &active_db_header = h1.iteration > h2.iteration ? h1 : h2;
+		ShowUnsupportedStorageVersionError(active_db_header.serialization_compatibility);
+	}
 
 	// check the header with the highest iteration count
 	if (h1.iteration > h2.iteration) {

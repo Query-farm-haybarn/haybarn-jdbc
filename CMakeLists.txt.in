@@ -59,7 +59,7 @@ endif()
 # ABI-mismatched extensions. Nothing passes -DHAYBARN_ENGINE_VERSION, so the
 # cache bought nothing. This file is the single source of truth; bump it in
 # lockstep with the engine release.
-set(HAYBARN_ENGINE_VERSION "v1.5.5")
+set(HAYBARN_ENGINE_VERSION "v1.5.6")
 string(REGEX REPLACE "^v" "" HAYBARN_ENGINE_VERSION_NUM "${HAYBARN_ENGINE_VERSION}")
 string(REPLACE "." ";" HAYBARN_ENGINE_VERSION_PARTS "${HAYBARN_ENGINE_VERSION_NUM}")
 list(GET HAYBARN_ENGINE_VERSION_PARTS 0 HAYBARN_ENGINE_VERSION_MAJOR)
