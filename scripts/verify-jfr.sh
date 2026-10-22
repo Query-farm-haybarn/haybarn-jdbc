@@ -9,8 +9,8 @@
 set -euo pipefail
 
 REPO="$(cd "$(dirname "$0")/.." && pwd)"
-JAR="$REPO/build/release/duckdb_jdbc.jar"
-TESTS="$REPO/build/release/duckdb_jdbc_tests.jar"
+JAR="$REPO/build/release/haybarn_jdbc.jar"
+TESTS="$REPO/build/release/haybarn_jdbc_tests.jar"
 WORK="$(mktemp -d -t duckdb-jfr-verify.XXXXXX)"
 trap 'rm -rf "$WORK"' EXIT
 

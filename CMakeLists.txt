@@ -28,7 +28,7 @@ include(UseJava)
 
 # project definition
 
-project(DuckDBJava C CXX Java)
+project(HaybarnJava C CXX Java)
 
 if (NOT CMAKE_BUILD_TYPE OR CMAKE_BUILD_TYPE STREQUAL "")
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "" FORCE)
@@ -630,11 +630,11 @@ file(GLOB_RECURSE JAVA_SRC_FILES src/main/java/farm/query/haybarn/*.java)
 file(GLOB_RECURSE JAVA_TEST_FILES src/test/java/farm/query/haybarn/*.java)
 set(CMAKE_JAVA_COMPILE_FLAGS -encoding utf-8 -g -Xlint:all)
 
-add_jar(duckdb_jdbc_nolib ${JAVA_SRC_FILES} META-INF/services/java.sql.Driver
+add_jar(haybarn_jdbc_nolib ${JAVA_SRC_FILES} META-INF/services/java.sql.Driver
         META-INF/native-image/farm.query.haybarn/haybarn_jdbc/reachability-metadata.json
         MANIFEST META-INF/MANIFEST.MF
         GENERATE_NATIVE_HEADERS duckdb-native)
-add_jar(duckdb_jdbc_tests ${JAVA_TEST_FILES} INCLUDE_JARS duckdb_jdbc_nolib)
+add_jar(haybarn_jdbc_tests ${JAVA_TEST_FILES} INCLUDE_JARS haybarn_jdbc_nolib)
 
 
 # main shared lib compilation
@@ -649,14 +649,14 @@ endif()
 
 if(MSVC OR ZOS)
   list(APPEND DUCKDB_INCLUDE_DIRS src/stubs)
-  list(APPEND DUCKDB_SRC_FILES duckdb_java.def)
+  list(APPEND DUCKDB_SRC_FILES haybarn_java.def)
 endif()
 
 if(JEMALLOC_ENABLED)
   list(APPEND DUCKDB_SRC_FILES ${JEMALLOC_SRC_FILES})
 endif()
 
-add_library(duckdb_java SHARED
+add_library(haybarn_java SHARED
   src/jni/arrow.cpp
   src/jni/bindings_appender.cpp
   src/jni/bindings_common.cpp
@@ -671,7 +671,7 @@ add_library(duckdb_java SHARED
   src/jni/bindings_vector.cpp
   src/jni/bindings_value.cpp
   src/jni/config.cpp
-  src/jni/duckdb_java.cpp
+  src/jni/haybarn_java.cpp
   src/jni/functions.cpp
   src/jni/holders.cpp
   src/jni/refs.cpp
@@ -679,37 +679,37 @@ add_library(duckdb_java SHARED
   src/jni/util.cpp
   ${DUCKDB_SRC_FILES})
 
-target_include_directories(duckdb_java PRIVATE
+target_include_directories(haybarn_java PRIVATE
   ${JAVA_INCLUDE_PATH}
   ${JAVA_INCLUDE_PATH2}
   ${DUCKDB_INCLUDE_DIRS})
 
 if(JEMALLOC_ENABLED)
-  target_include_directories(duckdb_java PRIVATE
+  target_include_directories(haybarn_java PRIVATE
     ${JEMALLOC_INCLUDE_DIRS})
 endif()
 
-target_link_libraries(duckdb_java PRIVATE
+target_link_libraries(haybarn_java PRIVATE
   duckdb-native
   ${CMAKE_DL_LIBS})
 
 if(MSVC)
-  target_link_libraries(duckdb_java PRIVATE
+  target_link_libraries(haybarn_java PRIVATE
     ws2_32
     rstrtmgr
     bcrypt)
 endif()
 
 if(MSVC)
-  target_compile_options(duckdb_java PRIVATE
+  target_compile_options(haybarn_java PRIVATE
     /bigobj
     /utf-8)
 else()
-  target_compile_options(duckdb_java PRIVATE
+  target_compile_options(haybarn_java PRIVATE
     -fexceptions)
 endif()
 
-target_compile_definitions(duckdb_java PRIVATE
+target_compile_definitions(haybarn_java PRIVATE
   ${DUCKDB_DEFINITIONS}
   -DDUCKDB_BUILD_LIBRARY
   -DDUCKDB_STATIC_BUILD
@@ -717,54 +717,54 @@ target_compile_definitions(duckdb_java PRIVATE
   -DDUCKDB_EXTENSION_AUTOINSTALL_DEFAULT)
 
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-  target_compile_definitions(duckdb_java PRIVATE
+  target_compile_definitions(haybarn_java PRIVATE
     -DD_ASSERT_IS_ENABLED)
 endif()
 
 if(JEMALLOC_ENABLED)
-  target_compile_definitions(duckdb_java PRIVATE
+  target_compile_definitions(haybarn_java PRIVATE
     -DDUCKDB_ENABLE_JEMALLOC)
 endif()
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-  target_link_options(duckdb_java PRIVATE
+  target_link_options(haybarn_java PRIVATE
     -Bsymbolic
     -Bsymbolic-functions
     -fvisibility=hidden 
-    -Wl,--version-script=${CMAKE_CURRENT_LIST_DIR}/duckdb_java.map)
+    -Wl,--version-script=${CMAKE_CURRENT_LIST_DIR}/haybarn_java.map)
 elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
-  target_link_options(duckdb_java PRIVATE
+  target_link_options(haybarn_java PRIVATE
     -fvisibility=hidden
-    -Wl,-exported_symbols_list,${CMAKE_CURRENT_LIST_DIR}/duckdb_java.exp)
+    -Wl,-exported_symbols_list,${CMAKE_CURRENT_LIST_DIR}/haybarn_java.exp)
 endif()
 
 if(${ENABLE_ADDRESS_SANITIZER})
   message(STATUS "Address Sanitizer is enabled, run with LD_PRELOAD=\"/path/to/libasan.so.8 /path/to/libstdc++.so.6\"")
-  target_compile_options(duckdb_java PRIVATE
+  target_compile_options(haybarn_java PRIVATE
     -fsanitize=address
     -g
     -fno-omit-frame-pointer)
   if(CMAKE_BUILD_TYPE STREQUAL "Release")
-    target_compile_options(duckdb_java PRIVATE
+    target_compile_options(haybarn_java PRIVATE
       -O2)
   endif()
 endif()
 
 string(JOIN "_" LIB_SUFFIX ".so" ${OS_NAME} ${OS_ARCH})
-set_target_properties(duckdb_java PROPERTIES SUFFIX ${LIB_SUFFIX})
-set_target_properties(duckdb_java PROPERTIES PREFIX "lib")
+set_target_properties(haybarn_java PROPERTIES SUFFIX ${LIB_SUFFIX})
+set_target_properties(haybarn_java PROPERTIES PREFIX "lib")
 
 
 # JAR packing
 
 add_custom_command(
   OUTPUT dummy_jdbc_target
-  DEPENDS duckdb_java duckdb_jdbc_nolib duckdb_jdbc_tests
+  DEPENDS haybarn_java haybarn_jdbc_nolib haybarn_jdbc_tests
   COMMAND ${CMAKE_COMMAND} -E copy
-          duckdb_jdbc_nolib.jar
-          duckdb_jdbc.jar
-  COMMAND ${Java_JAR_EXECUTABLE} uf duckdb_jdbc.jar -C
-          $<TARGET_FILE_DIR:duckdb_java> $<TARGET_FILE_NAME:duckdb_java>)
+          haybarn_jdbc_nolib.jar
+          haybarn_jdbc.jar
+  COMMAND ${Java_JAR_EXECUTABLE} uf haybarn_jdbc.jar -C
+          $<TARGET_FILE_DIR:haybarn_java> $<TARGET_FILE_NAME:haybarn_java>)
 
 add_custom_target(jdbc ALL DEPENDS dummy_jdbc_target)
 

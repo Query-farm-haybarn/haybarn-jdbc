@@ -26,5 +26,5 @@ fi
 
 exec "${JAVA}" \
   --add-opens=java.base/java.nio=ALL-UNNAMED \
-  -cp "${BUILD_DIR}/duckdb_jdbc.jar:${BUILD_DIR}/duckdb_jdbc_tests.jar:${ARROW_DIR}/*" \
+  -cp "${BUILD_DIR}/haybarn_jdbc.jar:${BUILD_DIR}/haybarn_jdbc_tests.jar:${ARROW_DIR}/*" \
   src/test/external/TestArrow.java "$@"

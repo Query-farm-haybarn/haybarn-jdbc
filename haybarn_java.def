@@ -1,4 +1,4 @@
-LIBRARY   duckdb_java
+LIBRARY   haybarn_java
 EXPORTS
 
 JNI_OnLoad

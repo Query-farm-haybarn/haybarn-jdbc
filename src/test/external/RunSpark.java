@@ -3,7 +3,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class RunSpark {
 
-    static final String DUCKDB_JDBC_JAR = fromEnv("DUCKDB_JDBC_JAR", "./build/release/duckdb_jdbc.jar");
+    static final String DUCKDB_JDBC_JAR = fromEnv("DUCKDB_JDBC_JAR", "./build/release/haybarn_jdbc.jar");
     static final String SPARK_SQL_EXE = fromEnv("SPARK_SQL_EXE", "../spark/spark-3.5.5-bin-hadoop3/bin/spark-sql");
 
     public static void main(String[] args) throws Exception {

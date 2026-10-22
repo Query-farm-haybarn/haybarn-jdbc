@@ -1,5 +1,5 @@
 - headers:
-    - "build/release/CMakeFiles/duckdb_jdbc.dir/native_headers/farm_query_haybarn_DuckDBNative.h"
+    - "build/release/CMakeFiles/haybarn_jdbc.dir/native_headers/farm_query_haybarn_DuckDBNative.h"
   hooks: generator.py
   templates:
     - src: "src/jni/functions.hpp.template"
