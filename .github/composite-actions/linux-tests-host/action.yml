@@ -16,8 +16,8 @@ runs:
         cat /etc/os-release
         java -version
         java                                                \
-          -cp ./build/release/duckdb_jdbc_tests.jar:./build/release/duckdb_jdbc.jar \
-          org.duckdb.TestDuckDBJDBC
+          -cp ./build/release/haybarn_jdbc_tests.jar:./build/release/haybarn_jdbc.jar \
+          farm.query.haybarn.TestDuckDBJDBC
 
     - name: Arrow Tests Host
       shell: bash

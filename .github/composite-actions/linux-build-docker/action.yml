@@ -14,21 +14,33 @@ runs:
       run: |
         python ./scripts/retry.py --timeout 1m -- \
           docker pull ${{ inputs.docker_image }}
-        docker run                                   \
-        -v.:/duckdb                                  \
-        -e GEN=ninja                                 \
-        -e CC='ccache gcc'                           \
-        -e CXX='ccache g++'                          \
-        -e CCACHE_DIR=/duckdb/ccache                 \
-        -e JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
-        ${{ inputs.docker_image }}                   \
-        bash -c "
-          set -e
-          cat /etc/os-release
-          python3 /duckdb/scripts/retry.py --timeout 2m -- \
-            dnf install -y           \
-            ccache                   \
-            java-1.8.0-openjdk-devel \
-            ninja-build
-          make -C /duckdb release
-        "
+        docker run \
+          -v "${GITHUB_WORKSPACE}:/duckdb" \
+          -e GEN=ninja \
+          -e CC='ccache gcc' -e CXX='ccache g++' \
+          -e CCACHE_DIR=/duckdb/ccache \
+          -e CCACHE_BASEDIR=/duckdb \
+          -e CCACHE_NOHASHDIR=1 \
+          -e CCACHE_SLOPPINESS=time_macros,include_file_mtime,pch_defines \
+          -e CCACHE_COMPILERCHECK=content \
+          -e CCACHE_REMOTE_STORAGE \
+          -e JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk \
+          ${{ inputs.docker_image }} \
+          bash -c '
+            set -e
+            cat /etc/os-release
+            python3 /duckdb/scripts/retry.py --timeout 2m -- \
+              dnf install -y java-1.8.0-openjdk-devel ninja-build
+            # EPEL 8 ccache is 3.7.7 — too old for HTTP remote-storage.
+            # ccaches glibc tarball needs GLIBC_2.34+; the manylinux_2_28
+            # base has 2.28. The musl-static variant is fully statically
+            # linked and runs on any Linux regardless of host libc.
+            CCACHE_VERSION=4.13.6
+            ARCH=$(uname -m)
+            curl -fsSL "https://github.com/ccache/ccache/releases/download/v${CCACHE_VERSION}/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static.tar.xz" -o /tmp/ccache.tar.xz
+            tar -xJf /tmp/ccache.tar.xz -C /tmp
+            install -m 0755 "/tmp/ccache-${CCACHE_VERSION}-linux-${ARCH}-musl-static/ccache" /usr/local/bin/ccache
+            ccache --version
+            make -C /duckdb release
+            ccache -s
+          '
