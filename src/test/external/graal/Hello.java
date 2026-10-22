@@ -4,8 +4,8 @@ import java.time.LocalDateTime;
 public class Hello {
     public static void main(String[] a) {
         try {
-            Class.forName("org.duckdb.DuckDBDriver");
-            try (Connection c = DriverManager.getConnection("jdbc:duckdb:"); Statement s = c.createStatement();
+            Class.forName("farm.query.haybarn.HaybarnDriver");
+            try (Connection c = DriverManager.getConnection("jdbc:haybarn:"); Statement s = c.createStatement();
                  ResultSet r = s.executeQuery("SELECT 42 AS answer")) {
                 while (r.next()) {
                     System.out.println(r.getInt(1));
@@ -33,7 +33,7 @@ public class Hello {
     private static void checkTimestampNs() throws Exception {
         LocalDateTime expected = LocalDateTime.of(2026, 2, 20, 12, 0, 0, 123456789);
         long expectedNanos = 1771588800123456789L;
-        try (Connection c = DriverManager.getConnection("jdbc:duckdb:"); Statement s = c.createStatement()) {
+        try (Connection c = DriverManager.getConnection("jdbc:haybarn:"); Statement s = c.createStatement()) {
             s.execute("CREATE TABLE ns_bind (id INT, ts TIMESTAMP_NS)");
             try (PreparedStatement ps = c.prepareStatement("INSERT INTO ns_bind VALUES (?, ?)")) {
                 ps.setInt(1, 1);

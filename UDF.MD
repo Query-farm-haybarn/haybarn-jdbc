@@ -17,5 +17,5 @@ type mapping.
 
 The exercised examples live in the driver's own test suite:
 
-- `src/test/java/org/duckdb/TestScalarFunctions.java`
-- `src/test/java/org/duckdb/TestTableFunctions.java`
+- `src/test/java/farm/query/haybarn/TestScalarFunctions.java`
+- `src/test/java/farm/query/haybarn/TestTableFunctions.java`

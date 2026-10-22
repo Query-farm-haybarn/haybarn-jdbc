@@ -17,11 +17,11 @@ static duckdb_bind_info bind_info_buf_to_bind_info(JNIEnv *env, jobject bind_inf
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_add_result_column
  * Signature: (Ljava/nio/ByteBuffer;[BLjava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1add_1result_1column(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1add_1result_1column(JNIEnv *env, jclass,
                                                                                         jobject bind_info,
                                                                                         jbyteArray name,
                                                                                         jobject logical_type) {
@@ -47,11 +47,11 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1add_1result_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_parameter_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1parameter_1count(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1get_1parameter_1count(JNIEnv *env, jclass,
                                                                                            jobject bind_info) {
 
 	duckdb_bind_info bi = bind_info_buf_to_bind_info(env, bind_info);
@@ -65,11 +65,11 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1parame
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_parameter
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1parameter(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1get_1parameter(JNIEnv *env, jclass,
                                                                                       jobject bind_info, jlong index) {
 
 	duckdb_bind_info bi = bind_info_buf_to_bind_info(env, bind_info);
@@ -87,11 +87,11 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1para
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_get_named_parameter
  * Signature: (Ljava/nio/ByteBuffer;[B)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1named_1parameter(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1get_1named_1parameter(JNIEnv *env, jclass,
                                                                                              jobject bind_info,
                                                                                              jbyteArray name) {
 
@@ -110,11 +110,11 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1get_1name
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_bind_data
  * Signature: (Ljava/nio/ByteBuffer;Ljava/lang/Object;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1set_1bind_1data(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1set_1bind_1data(JNIEnv *env, jclass,
                                                                                     jobject bind_info,
                                                                                     jobject bind_data) {
 
@@ -136,11 +136,11 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1set_1bind_1d
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_cardinality
  * Signature: (Ljava/nio/ByteBuffer;JZ)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1set_1cardinality(JNIEnv *env, jclass,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1set_1cardinality(JNIEnv *env, jclass,
                                                                                      jobject bind_info,
                                                                                      jlong cardinality,
                                                                                      jboolean is_exact) {
@@ -158,11 +158,11 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1set_1cardina
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_bind_set_error
  * Signature: (Ljava/nio/ByteBuffer;[B)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1bind_1set_1error(JNIEnv *env, jclass, jobject bind_info,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1bind_1set_1error(JNIEnv *env, jclass, jobject bind_info,
                                                                                jbyteArray error) {
 	duckdb_bind_info bi = bind_info_buf_to_bind_info(env, bind_info);
 	if (env->ExceptionCheck()) {

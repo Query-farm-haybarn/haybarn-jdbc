@@ -1,11 +1,11 @@
 #include "bindings.hpp"
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_vector_size
  * Signature: ()J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1vector_1size(JNIEnv *, jclass) {
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1vector_1size(JNIEnv *, jclass) {
 
 	idx_t vector_size = duckdb_vector_size();
 

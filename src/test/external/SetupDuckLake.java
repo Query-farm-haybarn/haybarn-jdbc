@@ -39,14 +39,14 @@ class SetupDuckLake {
     static void setupDuckLake() throws Exception {
         System.out.println("Creating DuckLake instance ...");
         try (Connection conn =
-                 DriverManager.getConnection("jdbc:duckdb:;session_init_sql_file=" + SESSION_INIT_SQL_FILE + ";");
+                 DriverManager.getConnection("jdbc:haybarn:;session_init_sql_file=" + SESSION_INIT_SQL_FILE + ";");
              Statement stmt = conn.createStatement()) {
             stmt.execute("ATTACH '" + DUCKLAKE_URL + "' AS lake (DATA_PATH 's3://bucket1')");
             stmt.execute("USE lake");
             System.out.println("Loading data from URL: '" + PARQUET_FILE_URL + "' ...");
             stmt.execute("CREATE TABLE tab1 AS FROM '" + PARQUET_FILE_URL + "'");
         }
-        try (Connection conn = DriverManager.getConnection("jdbc:duckdb:" + DUCKLAKE_URL +
+        try (Connection conn = DriverManager.getConnection("jdbc:haybarn:" + DUCKLAKE_URL +
                                                            ";session_init_sql_file=" + SESSION_INIT_SQL_FILE + ";");
              Statement stmt = conn.createStatement()) {
             try (ResultSet rs = stmt.executeQuery("SELECT count(*) FROM tab1")) {
