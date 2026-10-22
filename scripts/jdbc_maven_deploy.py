@@ -97,7 +97,7 @@ for i in range(len(arch_specific_builds)):
 pom_template = """
 <project>
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.duckdb</groupId>
+  <groupId>farm.query.haybarn</groupId>
   <artifactId>duckdb_jdbc</artifactId>
   <version>${VERSION}</version>
   <packaging>jar</packaging>
@@ -164,7 +164,7 @@ for build in combine_builds:
 
 javadoc_stage_dir = tempfile.mkdtemp()
 
-exec("javadoc -Xdoclint:-reference -d %s -sourcepath %s/src/main/java org.duckdb" % (javadoc_stage_dir, jdbc_root_path))
+exec("javadoc -Xdoclint:-reference -d %s -sourcepath %s/src/main/java farm.query.haybarn" % (javadoc_stage_dir, jdbc_root_path))
 exec("jar -cvf %s -C %s ." % (javadoc_jar, javadoc_stage_dir))
 exec("jar -cvf %s -C %s/src/main/java org" % (sources_jar, jdbc_root_path))
 

@@ -42,11 +42,11 @@ TEST_JAR=$(JARS)/duckdb_jdbc_tests.jar
 CP=$(JAR)$(SEP)$(TEST_JAR)
 
 test: 
-	java -cp $(CP) org.duckdb.TestDuckDBJDBC
+	java -cp $(CP) farm.query.haybarn.TestDuckDBJDBC
 
 stress:
 	java -Dduckdb.perf.rows=$(PERF_ROWS) -Dduckdb.perf.samples=$(PERF_SAMPLES) \
-		-Dduckdb.perf.assert=true -cp $(CP) org.duckdb.TestDuckDBJDBC TestStringWritePerformance
+		-Dduckdb.perf.assert=true -cp $(CP) farm.query.haybarn.TestDuckDBJDBC TestStringWritePerformance
 
 debug:
 	mkdir -p build/debug

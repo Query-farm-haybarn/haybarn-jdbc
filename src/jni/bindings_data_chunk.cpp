@@ -22,11 +22,11 @@ duckdb_data_chunk chunk_buf_to_chunk(JNIEnv *env, jobject chunk_buf) {
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_create_data_chunk
  * Signature: ([Ljava/nio/ByteBuffer;)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1data_1chunk(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1create_1data_1chunk(JNIEnv *env, jclass,
                                                                                      jobjectArray logical_types) {
 
 	if (logical_types == nullptr) {
@@ -61,11 +61,11 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1create_1data_1c
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_destroy_data_chunk
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1data_1chunk(JNIEnv *env, jclass, jobject chunk) {
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1destroy_1data_1chunk(JNIEnv *env, jclass, jobject chunk) {
 
 	duckdb_data_chunk dc = chunk_buf_to_chunk(env, chunk);
 	if (env->ExceptionCheck()) {
@@ -76,11 +76,11 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1destroy_1data_1chu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_data_chunk_reset
  * Signature: (Ljava/nio/ByteBuffer;)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1reset(JNIEnv *env, jclass, jobject chunk) {
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1data_1chunk_1reset(JNIEnv *env, jclass, jobject chunk) {
 
 	duckdb_data_chunk dc = chunk_buf_to_chunk(env, chunk);
 	if (env->ExceptionCheck()) {
@@ -91,11 +91,11 @@ JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1reset
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_data_chunk_get_column_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1get_1column_1count(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1data_1chunk_1get_1column_1count(JNIEnv *env, jclass,
                                                                                                jobject chunk) {
 
 	duckdb_data_chunk dc = chunk_buf_to_chunk(env, chunk);
@@ -109,11 +109,11 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1get_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_data_chunk_get_vector
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1get_1vector(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1data_1chunk_1get_1vector(JNIEnv *env, jclass,
                                                                                           jobject chunk,
                                                                                           jlong col_idx) {
 
@@ -133,11 +133,11 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1ge
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_data_chunk_get_size
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1get_1size(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1data_1chunk_1get_1size(JNIEnv *env, jclass,
                                                                                       jobject chunk) {
 
 	duckdb_data_chunk dc = chunk_buf_to_chunk(env, chunk);
@@ -151,11 +151,11 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1get_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_data_chunk_set_size
  * Signature: (Ljava/nio/ByteBuffer;J)V
  */
-JNIEXPORT void JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1data_1chunk_1set_1size(JNIEnv *env, jclass, jobject chunk,
+JNIEXPORT void JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1data_1chunk_1set_1size(JNIEnv *env, jclass, jobject chunk,
                                                                                      jlong size) {
 
 	duckdb_data_chunk dc = chunk_buf_to_chunk(env, chunk);

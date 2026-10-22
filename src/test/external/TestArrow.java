@@ -1,9 +1,9 @@
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static java.util.Arrays.asList;
-import static org.duckdb.DuckDBDriver.JDBC_STREAM_RESULTS;
-import static org.duckdb.TestDuckDBJDBC.JDBC_URL;
-import static org.duckdb.test.Assertions.*;
-import static org.duckdb.test.Runner.runTests;
+import static farm.query.haybarn.HaybarnDriver.JDBC_STREAM_RESULTS;
+import static farm.query.haybarn.TestDuckDBJDBC.JDBC_URL;
+import static farm.query.haybarn.test.Assertions.*;
+import static farm.query.haybarn.test.Runner.runTests;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -37,8 +37,8 @@ import org.apache.arrow.vector.types.FloatingPointPrecision;
 import org.apache.arrow.vector.types.pojo.ArrowType;
 import org.apache.arrow.vector.types.pojo.Field;
 import org.apache.arrow.vector.types.pojo.Schema;
-import org.duckdb.DuckDBConnection;
-import org.duckdb.DuckDBResultSet;
+import farm.query.haybarn.DuckDBConnection;
+import farm.query.haybarn.DuckDBResultSet;
 
 /**
  * Tests for Arrow integration: {@link DuckDBConnection#registerArrowStream} and

@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: DuckDB JDBC Driver
-Bundle-SymbolicName: org.duckdb.duckdb_jdbc
+Bundle-SymbolicName: farm.query.haybarn.duckdb_jdbc
 Bundle-Version: 2.0.0.0
 Bundle-Vendor: DuckDB Labs
 Bundle-Description: A JDBC-compliant driver for the DuckDB data management system
@@ -9,6 +9,6 @@ Bundle-License: https://raw.githubusercontent.com/duckdb/duckdb/main/LICENSE
 Bundle-DocURL: https://www.duckdb.org
 Bundle-ContactAddress: mark@duckdblabs.com
 Bundle-Copyright: Copyright (c) DuckDB Labs
-Export-Package: org.duckdb, org.duckdb.io, org.duckdb.user
+Export-Package: farm.query.haybarn, farm.query.haybarn.io, farm.query.haybarn.user
 Import-Package: javax.sql, org.osgi.framework;resolution:=optional
 Automatic-Module-Name: duckdb.jdbc

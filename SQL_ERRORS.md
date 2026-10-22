@@ -5,8 +5,8 @@ Every `java.sql.SQLException` thrown by the DuckDB JDBC driver carries two extra
 - a **vendor error code**, returned by `SQLException#getErrorCode()`, and
 - a **categorized SQLState**, returned by `SQLException#getSQLState()`.
 
-The authoritative list of codes is the public `org.duckdb.ErrorCode` enum; the categorized states live in
-`org.duckdb.SQLState`. Each `ErrorCode` constant identifies a single, fixed call site, so a caller that
+The authoritative list of codes is the public `farm.query.haybarn.ErrorCode` enum; the categorized states live in
+`farm.query.haybarn.SQLState`. Each `ErrorCode` constant identifies a single, fixed call site, so a caller that
 sees a code can pinpoint the exact origin of the failure.
 
 ## Error codes

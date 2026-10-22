@@ -19,11 +19,11 @@ static duckdb_appender appender_buf_to_appender(JNIEnv *env, jobject appender_bu
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_create_ext
  * Signature: (Ljava/nio/ByteBuffer;[B[B[B[Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1create_1ext(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1create_1ext(JNIEnv *env, jclass,
                                                                                     jobject connection,
                                                                                     jbyteArray catalog,
                                                                                     jbyteArray schema, jbyteArray table,
@@ -70,11 +70,11 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1create_1
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_error
  * Signature: (Ljava/nio/ByteBuffer;)[B
  */
-JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1error(JNIEnv *env, jclass,
+JNIEXPORT jbyteArray JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1error(JNIEnv *env, jclass,
                                                                                     jobject appender) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
@@ -93,11 +93,11 @@ JNIEXPORT jbyteArray JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1er
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_flush
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1flush(JNIEnv *env, jclass, jobject appender) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1flush(JNIEnv *env, jclass, jobject appender) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
 	if (env->ExceptionCheck()) {
@@ -110,11 +110,11 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1flush(JN
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_close
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1close(JNIEnv *env, jclass, jobject appender) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1close(JNIEnv *env, jclass, jobject appender) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
 	if (env->ExceptionCheck()) {
@@ -127,11 +127,11 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1close(JN
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_destroy
  * Signature: (Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1destroy(JNIEnv *env, jclass, jobject appender) {
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1destroy(JNIEnv *env, jclass, jobject appender) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
 	if (env->ExceptionCheck()) {
@@ -144,11 +144,11 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1destroy(
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_column_count
  * Signature: (Ljava/nio/ByteBuffer;)J
  */
-JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1column_1count(JNIEnv *env, jclass,
+JNIEXPORT jlong JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1column_1count(JNIEnv *env, jclass,
                                                                                        jobject appender) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
@@ -162,11 +162,11 @@ JNIEXPORT jlong JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1column_
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_appender_column_type
  * Signature: (Ljava/nio/ByteBuffer;J)Ljava/nio/ByteBuffer;
  */
-JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1column_1type(JNIEnv *env, jclass,
+JNIEXPORT jobject JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1appender_1column_1type(JNIEnv *env, jclass,
                                                                                         jobject appender,
                                                                                         jlong col_idx) {
 
@@ -186,11 +186,11 @@ JNIEXPORT jobject JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1appender_1colum
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_append_data_chunk
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1append_1data_1chunk(JNIEnv *env, jclass, jobject appender,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1append_1data_1chunk(JNIEnv *env, jclass, jobject appender,
                                                                                   jobject chunk) {
 
 	duckdb_appender app = appender_buf_to_appender(env, appender);
@@ -209,11 +209,11 @@ JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1append_1data_1chun
 }
 
 /*
- * Class:     org_duckdb_DuckDBBindings
+ * Class:     farm_query_haybarn_DuckDBBindings
  * Method:    duckdb_append_default_to_chunk
  * Signature: (Ljava/nio/ByteBuffer;Ljava/nio/ByteBuffer;JJ)I
  */
-JNIEXPORT jint JNICALL Java_org_duckdb_DuckDBBindings_duckdb_1append_1default_1to_1chunk(JNIEnv *env, jclass,
+JNIEXPORT jint JNICALL Java_farm_query_haybarn_DuckDBBindings_duckdb_1append_1default_1to_1chunk(JNIEnv *env, jclass,
                                                                                          jobject appender,
                                                                                          jobject chunk, jlong col,
                                                                                          jlong row) {
