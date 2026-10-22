@@ -44,7 +44,7 @@ import farm.query.haybarn.DuckDBResultSet;
  * Tests for Arrow integration: {@link DuckDBConnection#registerArrowStream} and
  * {@link DuckDBResultSet#arrowExportStream}.
  *
- * Launched directly from source with test_arrow.sh, requires duckdb_jdbc.jar, duckdb_jdbc_tests.jar
+ * Launched directly from source with test_arrow.sh, requires haybarn_jdbc.jar, haybarn_jdbc_tests.jar
  * and Arrow JARs (listed in data/arrow/arrow_jars.txt) on classpath.
  */
 public class TestArrow {

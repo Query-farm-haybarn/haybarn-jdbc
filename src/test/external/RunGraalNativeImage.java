@@ -9,7 +9,7 @@ import java.nio.file.StandardCopyOption;
 
 public class RunGraalNativeImage {
 
-    static final String DUCKDB_JDBC_JAR = fromEnv("DUCKDB_JDBC_JAR", "./build/release/duckdb_jdbc.jar");
+    static final String DUCKDB_JDBC_JAR = fromEnv("DUCKDB_JDBC_JAR", "./build/release/haybarn_jdbc.jar");
 
     public static void main(String[] args) throws Exception {
         if (args.length != 1) {

@@ -1,1 +1,1 @@
-{ "resources": { "includes": [ { "pattern": "libduckdb_java\\.so_linux_amd64" } ] } }
+{ "resources": { "includes": [ { "pattern": "libhaybarn_java\\.so_linux_amd64" } ] } }

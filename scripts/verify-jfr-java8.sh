@@ -23,23 +23,23 @@ step() { printf '\n== %s ==\n' "$*"; }
 java_major=$(java -version 2>&1 | awk -F\" '/version/ {split($2,a,"."); print (a[1]=="1")?a[2]:a[1]; exit}')
 [[ "$java_major" == "8" ]] || die "need Java 8, got $java_major (use verify-jfr.sh for Java >= 9)"
 [[ -d "$RELEASE" ]] || die "run 'make release' first (native library not found)"
-NATIVE_LIB=$(ls "$RELEASE"/libduckdb_java.so_* 2>/dev/null | head -n1) \
-    || die "no libduckdb_java.so_* under $RELEASE"
+NATIVE_LIB=$(ls "$RELEASE"/libhaybarn_java.so_* 2>/dev/null | head -n1) \
+    || die "no libhaybarn_java.so_* under $RELEASE"
 
 # Build Java 8 jars (idempotent) ---------------------------------------------
 
-if [[ ! -f "$BUILD/duckdb_jdbc_tests.jar" ]]; then
+if [[ ! -f "$BUILD/haybarn_jdbc_tests.jar" ]]; then
     step "building Java 8 jars"
     mkdir -p "$BUILD"
     (cd "$BUILD" \
         && cmake -DCMAKE_BUILD_TYPE=Release "$REPO" >/dev/null \
-        && cmake --build . --target duckdb_jdbc_tests >/dev/null)
-    cp "$BUILD/duckdb_jdbc_nolib.jar" "$BUILD/duckdb_jdbc.jar"
-    jar uf "$BUILD/duckdb_jdbc.jar" -C "$(dirname "$NATIVE_LIB")" "$(basename "$NATIVE_LIB")"
+        && cmake --build . --target haybarn_jdbc_tests >/dev/null)
+    cp "$BUILD/haybarn_jdbc_nolib.jar" "$BUILD/haybarn_jdbc.jar"
+    jar uf "$BUILD/haybarn_jdbc.jar" -C "$(dirname "$NATIVE_LIB")" "$(basename "$NATIVE_LIB")"
 fi
 
-JAR="$BUILD/duckdb_jdbc.jar"
-TESTS="$BUILD/duckdb_jdbc_tests.jar"
+JAR="$BUILD/haybarn_jdbc.jar"
+TESTS="$BUILD/haybarn_jdbc_tests.jar"
 
 # Confirm bytecode 52 (Java 8) ------------------------------------------------
 
