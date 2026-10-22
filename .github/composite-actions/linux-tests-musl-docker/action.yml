@@ -15,7 +15,7 @@ runs:
         python ./scripts/retry.py --timeout 1m -- \
           docker pull ${{ inputs.docker_image }}
         docker run                                 \
-          -v.:/duckdb                              \
+          -v "${GITHUB_WORKSPACE}:/duckdb"          \
           -e GEN=ninja                             \
           -e JAVA_HOME=/usr/lib/jvm/java-8-openjdk \
           ${{ inputs.docker_image }}               \
