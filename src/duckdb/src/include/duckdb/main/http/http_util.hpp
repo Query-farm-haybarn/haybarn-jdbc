@@ -14,6 +14,7 @@
 #include "duckdb/common/enums/http_status_code.hpp"
 #include "duckdb/common/types/timestamp.hpp"
 #include "duckdb/common/time_point.hpp"
+#include "duckdb/common/atomic.hpp"
 #include "duckdb/common/mutex.hpp"
 #include "duckdb/common/unordered_map.hpp"
 #include "duckdb/main/http/http_retry_budget.hpp"
@@ -191,6 +192,8 @@ struct HTTPResponse {
 	string reason;
 	HTTPHeaders headers;
 	bool success = true;
+	//! A flag-aborted response is terminal and must never be retried.
+	bool cancelled = false;
 
 public:
 	bool HasHeader(const string &key) const;
@@ -201,6 +204,9 @@ public:
 	bool HasRequestError() const;
 	const string &GetRequestError() const;
 	const string &GetError() const;
+	bool IsCancelled() const {
+		return cancelled;
+	}
 
 	bool ShouldRetry() const;
 };
@@ -222,6 +228,9 @@ struct BaseRequest {
 	bool try_request = false;
 	//! Borrowed operation-local budget; it must outlive all participating requests.
 	optional_ptr<HTTPRetryBudget> retry_budget;
+	//! Caller-owned flag, polled by the backend for every HTTP method. It must outlive Request(),
+	//! including any cross-thread curl dispatcher access. Cancellation is cooperative.
+	optional_ptr<const atomic<bool>> cancellation;
 
 	//! Requests will optionally contain their timings
 	bool have_request_timing = false;
