@@ -110,10 +110,10 @@ Then bump `HAYBARN_ENGINE_VERSION` (both CMake files) and the version in
 
 - **Maven Central** at `farm.query.haybarn:haybarn_jdbc`. Per-platform native
   libraries are bundled as classified JARs (`linux_amd64`, `linux_arm64`,
-  `linux_amd64_musl`, `linux_arm64_musl`, `macos_arm64`, `windows_amd64`,
-  `windows_arm64`) plus a fat `haybarn_jdbc.jar` containing linux-amd64,
-  linux-arm64, macos-arm64 and windows-amd64. Haybarn 2.0 does not support
-  macOS x86_64 (Intel Macs).
+  `linux_amd64_musl`, `linux_arm64_musl`, `macos_arm64`, `windows_amd64`)
+  plus a fat `haybarn_jdbc.jar` containing linux-amd64, linux-arm64,
+  macos-arm64 and windows-amd64. Haybarn 2.0 does not support macOS x86_64
+  (Intel Macs) or Windows arm64.
 - Releases are GPG-signed with the Haybarn release key (the same key used by
   `Query-farm-haybarn/haybarn` GitHub releases).
 - Release tags are `haybarn-v<version>`; `.github/workflows/haybarn-jdbc.yml`

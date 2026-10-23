@@ -106,10 +106,11 @@ Pushing tag `haybarn-v<version>` triggers `.github/workflows/haybarn-jdbc.yml`:
 
 1. Per-platform build matrix: Linux amd64/arm64 (glibc, `manylinux_2_28`),
    Linux amd64/arm64 (musl, `alpine:3.22`), macOS arm64 (`macos-15`, JDK 21;
-   Haybarn 2.0 dropped macOS x86_64), Windows amd64/arm64.
+   Haybarn 2.0 dropped macOS x86_64), Windows amd64 (2.0 dropped Windows
+   arm64).
    Each uploads a `haybarn_jdbc.jar` with its native library bundled. The
    Linux-amd64, macOS and Windows-amd64 jobs run the test suite.
-2. `maven-deploy` waits on **all 7** platform jobs, then `jdbc_maven_deploy.py`
+2. `maven-deploy` waits on **all 6** platform jobs, then `jdbc_maven_deploy.py`
    combines them into the fat `haybarn_jdbc.jar` + per-classifier jars
    (`_nolib`, per-arch incl. `*_musl`) + sources + javadoc + POM, GPG-signs
    each, and uploads to the Sonatype Central Portal
@@ -145,7 +146,7 @@ The release version lives in several places — update them together:
 - Re-vendor `src/duckdb/` from the matching engine tag if the engine changed.
 - Confirm extensions are published at `…/core/v<version>/<platform>/` before
   releasing (platforms: `linux_amd64`, `linux_arm64`, `*_musl`,
-  `windows_amd64`, `windows_arm64`, `osx_arm64`).
+  `windows_amd64`, `osx_arm64`; 2.0 builds no Windows arm64).
 
 Then `git tag haybarn-v<version> && git push origin haybarn-v<version>`. The
 workflow strips `haybarn-v` to derive the Maven version (`haybarn-v2.0.0-rc3`
