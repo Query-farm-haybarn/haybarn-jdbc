@@ -71,7 +71,6 @@ arch_specific_builds = [
   'linux-amd64-musl',
   'linux-aarch64-musl',
   'macos-aarch64',
-  'macos-amd64',
   'windows-amd64',
   'windows-aarch64',
 ]
@@ -81,7 +80,6 @@ arch_specific_classifiers = [
   'linux_amd64_musl',
   'linux_arm64_musl',
   'macos_arm64',
-  'macos_amd64',
   'windows_amd64',
   'windows_arm64',
 ]

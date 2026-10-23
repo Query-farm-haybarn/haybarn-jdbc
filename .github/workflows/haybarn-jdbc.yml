@@ -162,39 +162,6 @@ jobs:
           name: java-macos-aarch64
           path: build/release/haybarn_jdbc.jar
 
-  macos-amd64:
-    name: macOS (amd64)
-    # Cross-compiled on the arm64 runner (OSX_BUILD_AMD64=1, as upstream 2.0
-    # does); the tests run on an x64 JDK under Rosetta.
-    runs-on: macos-15
-    if: github.event_name != 'pull_request'
-    env:
-      GEN: ninja
-      CCACHE_DIR: ${{ github.workspace }}/.ccache
-    steps:
-      - uses: actions/checkout@v6
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'temurin'
-          java-version: '21'
-          architecture: x64
-      - name: Install ccache + ninja
-        run: brew install ccache ninja
-      - name: Build
-        run: OSX_BUILD_AMD64=1 make release && ccache -s
-      - name: Check architecture
-        run: test "$(lipo -archs build/release/libhaybarn_java.so_macos_amd64)" = "x86_64"
-      - name: JDBC Tests
-        run: |
-          java -cp build/release/haybarn_jdbc_tests.jar:build/release/haybarn_jdbc.jar \
-            farm.query.haybarn.TestDuckDBJDBC
-      - uses: actions/upload-artifact@v7
-        with:
-          name: java-macos-amd64
-          path: build/release/haybarn_jdbc.jar
-
   windows-amd64:
     name: Windows (amd64)
     runs-on: windows-2022
@@ -299,7 +266,6 @@ jobs:
       - linux-amd64-musl
       - linux-aarch64-musl
       - macos-aarch64
-      - macos-amd64
       - windows-amd64
       - windows-aarch64
     steps:
@@ -317,8 +283,6 @@ jobs:
         with: { name: java-linux-aarch64-musl, path: jdbc-artifacts/java-linux-aarch64-musl }
       - uses: actions/download-artifact@v8
         with: { name: java-macos-aarch64, path: jdbc-artifacts/java-macos-aarch64 }
-      - uses: actions/download-artifact@v8
-        with: { name: java-macos-amd64, path: jdbc-artifacts/java-macos-amd64 }
       - uses: actions/download-artifact@v8
         with: { name: java-windows-amd64, path: jdbc-artifacts/java-windows-amd64 }
       - uses: actions/download-artifact@v8
