@@ -72,7 +72,6 @@ arch_specific_builds = [
   'linux-aarch64-musl',
   'macos-aarch64',
   'windows-amd64',
-  'windows-aarch64',
 ]
 arch_specific_classifiers = [
   'linux_amd64',
@@ -81,7 +80,6 @@ arch_specific_classifiers = [
   'linux_arm64_musl',
   'macos_arm64',
   'windows_amd64',
-  'windows_arm64',
 ]
 
 staging_dir = tempfile.mkdtemp()
