@@ -31,7 +31,7 @@ Haybarn:
     -> haybarn_jdbc.jar.
   - OSGi MANIFEST.MF rebranded to Haybarn (Query Farm LLC, hello@query.farm).
   - The vendored src/duckdb/ DuckDB source tree was re-vendored via vendor.py
-    from Query-farm-haybarn/haybarn (tag haybarn-v2.0.0-rc6), so the embedded engine
+    from Query-farm-haybarn/haybarn (tag haybarn-v2.0.0-rc7), so the embedded engine
     carries the Haybarn extension trust root (single Haybarn public key, no
     DuckDB core/community keys) and the Haybarn extension repository URLs
     (https://haybarn-extensions.query.farm/{core,community}).
