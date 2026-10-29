@@ -20,7 +20,7 @@ extension repository URLs).
 <dependency>
   <groupId>farm.query.haybarn</groupId>
   <artifactId>haybarn_jdbc</artifactId>
-  <version>2.0.0-rc8</version>
+  <version>2.0.0-rc9</version>
 </dependency>
 ```
 
