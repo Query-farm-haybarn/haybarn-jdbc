@@ -6,7 +6,7 @@ Haybarn is independent of and not endorsed by the DuckDB Foundation.
 DuckDB is a trademark of the DuckDB Foundation
 (https://duckdb.org/trademark_guidelines).
 
-This repository is a hard fork of duckdb/duckdb-java at tag v2.0.0.0. The
+This repository is a hard fork of duckdb/duckdb-java at tag v2.0.1.0. The
 upstream MIT LICENSE is preserved verbatim. Modifications introduced by
 Haybarn:
 
@@ -31,7 +31,7 @@ Haybarn:
     -> haybarn_jdbc.jar.
   - OSGi MANIFEST.MF rebranded to Haybarn (Query Farm LLC, hello@query.farm).
   - The vendored src/duckdb/ DuckDB source tree was re-vendored via vendor.py
-    from Query-farm-haybarn/haybarn (tag haybarn-v2.0.0-rc11), so the embedded engine
+    from Query-farm-haybarn/haybarn (tag haybarn-v2.0.1-rc3), so the embedded engine
     carries the Haybarn extension trust root (single Haybarn public key, no
     DuckDB core/community keys) and the Haybarn extension repository URLs
     (https://haybarn-extensions.query.farm/{core,community}).

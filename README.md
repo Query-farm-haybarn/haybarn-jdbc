@@ -5,7 +5,7 @@ derived distribution of DuckDB ("Haybarn, powered by DuckDB"), published by
 Query Farm LLC.
 
 This is a hard fork of [duckdb/duckdb-java](https://github.com/duckdb/duckdb-java)
-based on tag `v2.0.0.0`, with the Java package, Maven coordinates, JNI library
+based on tag `v2.0.1.0`, with the Java package, Maven coordinates, JNI library
 name, and JDBC URL prefix rebranded to Haybarn. The vendored `src/duckdb/`
 engine tree is re-vendored from
 [Query-farm-haybarn/haybarn](https://github.com/Query-farm-haybarn/haybarn) so
@@ -20,7 +20,7 @@ extension repository URLs).
 <dependency>
   <groupId>farm.query.haybarn</groupId>
   <artifactId>haybarn_jdbc</artifactId>
-  <version>2.0.0-rc11</version>
+  <version>2.0.1-rc3</version>
 </dependency>
 ```
 
@@ -34,7 +34,7 @@ try (Connection conn = DriverManager.getConnection("jdbc:haybarn::memory:");
      Statement stmt = conn.createStatement();
      ResultSet rs = stmt.executeQuery("SELECT version()")) {
     rs.next();
-    System.out.println(rs.getString(1));   // v2.0.0
+    System.out.println(rs.getString(1));   // v2.0.1
 }
 ```
 
@@ -90,11 +90,11 @@ needed. The benchmark is intentionally not part of the regular test suite.
 `src/duckdb/` is a vendored copy of the DuckDB source, as modified by the
 Haybarn core fork. To roll forward to a newer Haybarn core, point a fresh
 checkout of the matching `Query-farm-haybarn/haybarn` release tag (2.0 line:
-`haybarn-v2.0.0-rc*` on `next-2.0`) at `vendor.py`:
+`haybarn-v2.0.*-rc*` on `next-2.0`) at `vendor.py`:
 
 ```sh
 rm -rf src/duckdb
-OVERRIDE_GIT_DESCRIBE=v2.0.0 python3 vendor.py --duckdb /path/to/haybarn-checkout
+OVERRIDE_GIT_DESCRIBE=v2.0.1 python3 vendor.py --duckdb /path/to/haybarn-checkout
 ```
 
 Then bump `HAYBARN_ENGINE_VERSION` (both CMake files) and the version in

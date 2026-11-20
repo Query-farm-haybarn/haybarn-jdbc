@@ -9,7 +9,7 @@ Guidance for Claude Code working in this repository.
 derived distribution of DuckDB ("Haybarn, powered by DuckDB"), published by
 Query Farm LLC. This repo is a **hard fork** of `duckdb/duckdb-java`. The
 1.5 line lives on `haybarn` / `haybarn-1.5.*` (base `v1.5.3.0`); the 2.0 line
-lives on `haybarn-2.0` (base `v2.0.0.0`). Don't mix the two.
+lives on `haybarn-2.0` (base `v2.0.1.0`). Don't mix the two.
 
 All Haybarn-specific changes are a small, curated **commit stack** on top of
 the upstream tag — not scattered edits. Keep it that way: the stack must
@@ -21,7 +21,7 @@ stay easy to rebase onto future upstream tags.
   hand-edit it — refresh it by running
   `rm -rf src/duckdb && OVERRIDE_GIT_DESCRIBE=v<X.Y.Z> python3 vendor.py
   --duckdb /path/to/haybarn-checkout` against a checkout of the matching
-  `Query-farm-haybarn/haybarn` release tag (2.0: `haybarn-v2.0.0-rc*`).
+  `Query-farm-haybarn/haybarn` release tag (2.0: `haybarn-v2.0.*-rc*`).
   Upstream 2.0's `vendor.py` emits the jemalloc source/include lists itself,
   so the 1.5-era post-vendor jemalloc fix-up is not needed on this branch.
   The Haybarn-specific source edits (extension trust root, repository URLs,
@@ -66,7 +66,7 @@ stay easy to rebase onto future upstream tags.
 - **One commit = one concern.** Prefer additive files over edits to upstream
   files. When you must edit upstream, keep it surgical.
 
-## The Haybarn commit stack (on top of duckdb-java @ v2.0.0.0)
+## The Haybarn commit stack (on top of duckdb-java @ v2.0.1.0)
 
 | Concern | Key files |
 |---|---|
