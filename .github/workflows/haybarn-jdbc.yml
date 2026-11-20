@@ -153,6 +153,8 @@ jobs:
         run: make release && ccache -s
       - name: Check architecture
         run: test "$(lipo -archs build/release/libhaybarn_java.so_macos_arm64)" = "arm64"
+      - name: Check minimum macOS version
+        run: otool -l build/release/libhaybarn_java.so_macos_arm64 | grep -A4 -E 'LC_BUILD_VERSION|LC_VERSION_MIN_MACOSX'
       - name: JDBC Tests
         run: |
           java -cp build/release/haybarn_jdbc_tests.jar:build/release/haybarn_jdbc.jar \
